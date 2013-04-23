@@ -27,23 +27,26 @@
 }
 
 - (void)initWithAlarmRecord:(AlarmRecord *)record{
-    NSInteger days = [self daysBetweenDate:[NSDate date] another:record.time];
+    
+    
+    NSInteger days = [self intervalWithDates:[NSDate date] another:record.time];
     [_day setText:[self dayTipByDays:days]];
     [_countdown setText:[self countDownTipByDates:[NSDate date] endDate:record.time]];
+    
 }
 
 - (BOOL)isToday:(NSDate *)date{
     
     NSDate *now = [NSDate date];
     
-    if([self daysBetweenDate:now another:date] == 0){
+    if([self intervalWithDates:now another:date] == 0){
         return YES;
     }
     
     return NO;
 }
 
-- (NSInteger)daysBetweenDate:(NSDate *)date another:(NSDate *)another{
+- (NSInteger)intervalWithDates:(NSDate *)date another:(NSDate *)another{
     
     NSInteger days = -1;
     

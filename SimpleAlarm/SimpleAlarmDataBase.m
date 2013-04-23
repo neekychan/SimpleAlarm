@@ -14,19 +14,17 @@ static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
 
 - (void)addAlarmClock:(NSDictionary *)setting{//type,cycle,time,rest_time,message
     
+    
     NSDate *date = (NSDate *)[setting objectForKey:DB_RECORD_SETTING_DATE];
     
     [db executeUpdate:@"INSERT INTO SIMPLEALARM (type,cycle,time,rest_time,message) VALUES(?,?,?,?,?)",[NSNumber numberWithInt:1],@"1,2,3,4,5",date,[NSNumber numberWithInt:15],@"No Message"];
-    //[db executeUpdate:@"INSERT INTO User (Name,Age) VALUES (?,?)",@"张三",[NSNumber numberWithInt:20]];
     FMResultSet *result = [db executeQuery:@"SELECT * FROM SIMPLEALARM"];
-    //FMResultSet *result = [db executeQuery:@"SELECT * FROM User"];
     while([result next]){
         NSLog(@"Type:%d,Cycle:%@,Time:%@,Rest_Time:%d,Message:%@",[result intForColumn:@"type"],[result stringForColumn:@"cycle"],[[result dateForColumn:@"time"] description],[result intForColumn:@"rest_time"],[result stringForColumn:@"message"]);
-        //NSLog(@"%@ %@",[result stringForColumn:@"Name"],[result stringForColumn:@"Age"]);
     }
     
-    
     [result close];
+
 }
 - (void)deleteAlarmClock:(int)itemID{
     
@@ -52,6 +50,7 @@ static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
         
         //NSValue *miValue = [NSValue valueWithBytes:&record objCType:@encode(AlarmRecord)]; // encode using the type name
         [alarms addObject:record];
+
         
         NSLog(@"Type:%d,Cycle:%@,Time:%@,Rest_Time:%d,Message:%@",
               [result intForColumn:@"type"],

@@ -23,7 +23,6 @@
 {
     NSArray *settingTiles;
     NSArray *settingIcons;
-    UIImageView *backGroundImageView;
     UIButton *hiddenKeyBoardView;
     UITextView *tmpMessageTextView;
     BOOL isMessageTextViewEmpty;

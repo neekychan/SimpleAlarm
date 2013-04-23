@@ -9,7 +9,7 @@
 #import "MainViewController.h"
 
 @interface MainViewController ()
-
+@property (retain, nonatomic) NSMutableArray *alarmRecords;
 @end
 
 @implementation MainViewController
@@ -27,7 +27,7 @@
 {
     [super viewDidLoad];
     
-    [self.navigationBar setTitle:@"添加"];
+    [self.navigationBar setTitle:@"简单闹钟"];
     [self.navigationBar addForwardButton:@"添加" action:@selector(addAlarmAction)];
     
     db = [[SimpleAlarmDataBase shareSimpleAlarmDataBase] retain];
@@ -35,15 +35,14 @@
     [_alarmListView setDataSource:self];
     [_alarmListView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//隐藏分割线
     [_alarmListView setShowsVerticalScrollIndicator:NO];
-    alarmRecords = [db allAlarmRecords];
-    NSLog(@"AlarmRecords retianCount:%d",[alarmRecords retainCount]);
+    self.alarmRecords = [db allAlarmRecords];
+    NSLog(@"AlarmRecords retianCount:%d",[self.alarmRecords  retainCount]);
     
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 
@@ -51,23 +50,20 @@
 - (void)addAlarmAction {
     //[db addAlarmClock:Nil];
     AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithNibName:@"AddAlarmViewController" bundle:Nil];
-    //[self.navigationController  presentViewController:addAlarmViewController animated:YES completion:Nil];
     [self.navigationController pushViewController:addAlarmViewController animated:YES];
     [addAlarmViewController release];
 }
 
 - (IBAction)testBtn:(id)sender {
-            NSString* dateStr = @"2013-2-8 00:00:00";
-            NSDateFormatter* formater = [[NSDateFormatter alloc] init];
-            [formater setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-            [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-            NSDate* date = [formater dateFromString:dateStr];
+    
+    NSDate *date = [DateHelper dateWithYear:2013 month:4 day:23 hour:23 minute:11 second:0];
 
     NSDictionary *setting = [[NSDictionary alloc]initWithObjectsAndKeys:date,DB_RECORD_SETTING_DATE,Nil];
     [db addAlarmClock:setting];
-    [alarmRecords release];
-    alarmRecords = [db allAlarmRecords];
-    [_alarmListView reloadData];
+    [setting release];
+    
+    self.alarmRecords = [db allAlarmRecords];
+    [self.alarmListView reloadData];
 }
 
 
@@ -86,8 +82,13 @@
         nibsRegistered = YES;
     }
     
-    AlarmRecord *record = (AlarmRecord *)[alarmRecords objectAtIndex:indexPath.row];
+    AlarmRecord *record = (AlarmRecord *)[self.alarmRecords objectAtIndex:indexPath.row];
     AlarmListCell *cell = (AlarmListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if(cell == Nil) {
+        cell = [[[AlarmListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+    }
+    
     [cell initWithAlarmRecord:record];
     
     //[cell.countdown setText:@"15小时15分后响铃"];
@@ -98,8 +99,8 @@
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"将要显示%d条记录",[alarmRecords count]);
-    return [alarmRecords count];
+    NSLog(@"将要显示%d条记录",[self.alarmRecords count]);
+    return [self.alarmRecords count];
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -109,13 +110,13 @@
 - (void)dealloc {
     [_alarmListItemView release];
     [_alarmListView release];
-    [alarmRecords release];
+    [self.alarmRecords release];
     [super dealloc];
 }
 - (void)viewDidUnload {
     [self setAlarmListItemView:Nil];
     [self setAlarmListView:Nil];
-    alarmRecords = Nil;
+    self.alarmRecords = Nil;
     [super viewDidUnload];
 }
 @end

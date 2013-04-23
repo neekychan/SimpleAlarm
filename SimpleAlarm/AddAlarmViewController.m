@@ -44,17 +44,11 @@ static NSString *CellIdentifier = @"settingCell";
     return self;
 }
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    
-    //cycleSettingView = [[CycleSettingViewController alloc] initWithNibName:@"CycleSettingViewController" bundle:Nil];
-    
-//    _customNavigationBar = [[[DefaultNavigationBar alloc] initWithController:self frame:CGRectMake(0, 0, 320, 43) title:@"添加闹钟"] retain];
-//    [_customNavigationBar addForwardButton:@"保存" action:@selector(saveBtnAction)];
-//    [_customNavigationBar addBackButton:@"返回" action:@selector(returnBtnAction)];
-//    [self.view addSubview:_customNavigationBar];
     
     [self.navigationBar setTitle:@"添加闹钟"];
     [self.navigationBar addForwardButton:@"保存" action:@selector(saveBtnAction)];
@@ -62,8 +56,8 @@ static NSString *CellIdentifier = @"settingCell";
     
     isMessageTextViewEmpty = YES;
     
-    settingTiles = [[[NSArray alloc] initWithObjects:@"时间",@"周期",@"小睡",nil] retain];
-    settingIcons = [[[NSArray alloc] initWithObjects:@"h_icon_clock",@"h_icon_cycle",@"h_icon_rest_time", nil] retain];
+    settingTiles = [[NSArray alloc] initWithObjects:@"时间",@"周期",@"小睡",nil];
+    settingIcons = [[NSArray alloc] initWithObjects:@"icon_clock",@"icon_cycle",@"icon_rest_time", nil];
     
     [_timePicker setDataSource:self];
     [_timePicker setDelegate:self];
@@ -73,10 +67,10 @@ static NSString *CellIdentifier = @"settingCell";
     
     [_settingTableView setDataSource:self];
     [_settingTableView setDelegate:self];
-    backGroundImageView = [[[UIImageView alloc] initWithImage:[UIImage imageNamed:@"h_background.jpg"]] retain];
+    UIImageView *backGroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
     [_settingTableView setBackgroundView:backGroundImageView];
+    [backGroundImageView release];
     
-    //[self.settingTableView.]
 
 
     UINib *nib = [UINib nibWithNibName:@"SettingViewCell" bundle:nil];
@@ -192,7 +186,7 @@ static NSString *CellIdentifier = @"settingCell";
     SettingViewCell *cell = (SettingViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == Nil) {
-        cell = [[SettingViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[[SettingViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
     [cell setBackgroundColor:UIColor.whiteColor];
@@ -201,7 +195,7 @@ static NSString *CellIdentifier = @"settingCell";
         case kSETTING_SECTION_TIMER:
         
             cell.titleLabel.text = [settingTiles objectAtIndex:indexPath.row]; 
-            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",[settingIcons objectAtIndex:indexPath.row]]];
+            UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[settingIcons objectAtIndex:indexPath.row]]];
             cell.iConImageView.image = iconImage;
             
             switch (indexPath.row) {
@@ -370,7 +364,6 @@ static NSString *CellIdentifier = @"settingCell";
 - (void)dealloc {
     [_saveButton release];
     [_settingTableView release];
-    [backGroundImageView release];
     [settingTiles release];
     [settingIcons release];
     [_messageTextView release];
@@ -380,7 +373,6 @@ static NSString *CellIdentifier = @"settingCell";
 - (void)viewDidUnload {
     [self setSaveButton:nil];
     [self setSettingTableView:nil];
-    backGroundImageView = Nil;
     settingIcons = Nil;
     settingTiles = Nil;
     [self setMessageTextView:nil];

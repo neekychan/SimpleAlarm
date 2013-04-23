@@ -13,7 +13,7 @@
 }
 
 @property (nonatomic, assign) UIViewController *controller;
-@property (nonatomic, retain) NSString *title;
+@property (nonatomic, copy) NSString *title;
 
 - (id)initWithController:(UIViewController *)controller frame:(CGRect)frame title:(NSString *)title;
 - (void)addBackButton:(NSString *)title action:(SEL)selector;

@@ -14,7 +14,6 @@
 
 @interface MainViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>{
     SimpleAlarmDataBase *db;
-    NSMutableArray *alarmRecords;
 }
 
 
