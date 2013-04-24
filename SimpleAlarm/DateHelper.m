@@ -15,7 +15,7 @@
     NSString *dateStr = [NSString stringWithFormat:@"%d-%d-%d %d:%d:%d",year,month,day,hour,minute,second];
     NSDateFormatter* formater = [[NSDateFormatter alloc] init];
     [formater setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-    [formater setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    [formater setDateFormat:kDateFormatterYearMonthDayHourMinuteSecond];
     NSDate* date = [formater dateFromString:dateStr];
     [formater release];
     return date;

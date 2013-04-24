@@ -56,6 +56,10 @@
 		64E9A55116EF8091005D5CB0 /* DefaultNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E9A55016EF8091005D5CB0 /* DefaultNavigationBar.m */; };
 		64F23A1916C7DD5C009257A0 /* SettingViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F23A1816C7DD5C009257A0 /* SettingViewCell.m */; };
 		64F23A1C16C7E2A8009257A0 /* SettingViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64F23A1B16C7E2A8009257A0 /* SettingViewCell.xib */; };
+		BEA0BCE6172768AE00E0D27D /* CycleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA0BCE5172768AE00E0D27D /* CycleCell.m */; };
+		BEA0BCE81727691400E0D27D /* CycleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEA0BCE71727691400E0D27D /* CycleCell.xib */; };
+		BEA0BCEA1727702100E0D27D /* icon_tick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA0BCE91727702100E0D27D /* icon_tick@2x.png */; };
+		BEA0BCEC1727D12F00E0D27D /* icon_tick_unselected@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA0BCEB1727D12F00E0D27D /* icon_tick_unselected@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -130,6 +134,11 @@
 		64F23A1716C7DD5C009257A0 /* SettingViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewCell.h; sourceTree = "<group>"; };
 		64F23A1816C7DD5C009257A0 /* SettingViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewCell.m; sourceTree = "<group>"; };
 		64F23A1B16C7E2A8009257A0 /* SettingViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewCell.xib; sourceTree = "<group>"; };
+		BEA0BCE4172768AE00E0D27D /* CycleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleCell.h; sourceTree = "<group>"; };
+		BEA0BCE5172768AE00E0D27D /* CycleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleCell.m; sourceTree = "<group>"; };
+		BEA0BCE71727691400E0D27D /* CycleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CycleCell.xib; sourceTree = "<group>"; };
+		BEA0BCE91727702100E0D27D /* icon_tick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tick@2x.png"; sourceTree = "<group>"; };
+		BEA0BCEB1727D12F00E0D27D /* icon_tick_unselected@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_tick_unselected@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -236,6 +245,8 @@
 				64D1D44C16C54FDF00BE9C26 /* icon_rest_time@2x.png */,
 				64D1D44D16C54FDF00BE9C26 /* icon_cycle@2x.png */,
 				64D1D44E16C54FDF00BE9C26 /* icon_clock@2x.png */,
+				BEA0BCE91727702100E0D27D /* icon_tick@2x.png */,
+				BEA0BCEB1727D12F00E0D27D /* icon_tick_unselected@2x.png */,
 				64D1D44F16C54FDF00BE9C26 /* h_addrecord_menu_bg1.png */,
 				64941A0D16C14A5100127237 /* mainboard_cell_extand@2x.png */,
 				64B0477816B94FF1009C936F /* mainboard_alarm_icon@2x.png */,
@@ -291,18 +302,29 @@
 		64D1D44416C54E5400BE9C26 /* AddAlarm */ = {
 			isa = PBXGroup;
 			children = (
+				BEA0BCE21727685C00E0D27D /* Cell */,
 				64C236E816ECC2860030F9CA /* DefaultDelegate.h */,
 				64D1D44616C54E9400BE9C26 /* AddAlarmViewController.h */,
 				64D1D44716C54E9400BE9C26 /* AddAlarmViewController.m */,
 				64D1D44816C54E9400BE9C26 /* AddAlarmViewController.xib */,
-				64F23A1716C7DD5C009257A0 /* SettingViewCell.h */,
-				64F23A1816C7DD5C009257A0 /* SettingViewCell.m */,
-				64F23A1B16C7E2A8009257A0 /* SettingViewCell.xib */,
 				64E9A54916EF7D82005D5CB0 /* CycleSettingViewController.h */,
 				64E9A54A16EF7D82005D5CB0 /* CycleSettingViewController.m */,
 				64E9A54B16EF7D82005D5CB0 /* CycleSettingViewController.xib */,
 			);
 			name = AddAlarm;
+			sourceTree = "<group>";
+		};
+		BEA0BCE21727685C00E0D27D /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				64F23A1716C7DD5C009257A0 /* SettingViewCell.h */,
+				64F23A1816C7DD5C009257A0 /* SettingViewCell.m */,
+				64F23A1B16C7E2A8009257A0 /* SettingViewCell.xib */,
+				BEA0BCE4172768AE00E0D27D /* CycleCell.h */,
+				BEA0BCE5172768AE00E0D27D /* CycleCell.m */,
+				BEA0BCE71727691400E0D27D /* CycleCell.xib */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -384,6 +406,9 @@
 				6466269117203B5200AC466C /* cycle_title_select@2x.png in Resources */,
 				6466269317203CDB00AC466C /* cycle_title_select_line@2x.png in Resources */,
 				646626971720499A00AC466C /* itemboard@2x.png in Resources */,
+				BEA0BCE81727691400E0D27D /* CycleCell.xib in Resources */,
+				BEA0BCEA1727702100E0D27D /* icon_tick@2x.png in Resources */,
+				BEA0BCEC1727D12F00E0D27D /* icon_tick_unselected@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,7 +426,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export CODESIGN_ALLOCATE=/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/codesign_allocate\nif [ \"${PLATFORM_NAME}\" == \"iphoneos\" ] || [ \"${PLATFORM_NAME}\" == \"ipados\" ]; then\n/Applications/Xcode.app/Contents/Developer/iphoneentitlements/gen_entitlements.py \"my.company.${PROJECT_NAME}\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\";\ncodesign -f -s \"iPhone Developer\" --entitlements \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/${PROJECT_NAME}.xcent\" \"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/\"\nfi";
+			shellScript = "";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -427,6 +452,7 @@
 				64E9A55116EF8091005D5CB0 /* DefaultNavigationBar.m in Sources */,
 				649634EF1715A87B005C118D /* BaseViewController.m in Sources */,
 				64ACD3851726DA85004DD0B8 /* DateHelper.m in Sources */,
+				BEA0BCE6172768AE00E0D27D /* CycleCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

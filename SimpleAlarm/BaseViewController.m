@@ -26,6 +26,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIImageView *background = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 320, 43)];
+    [background setBackgroundColor:[UIColor blackColor]];
+    [self.view addSubview:background];
+    [background release];
+    
     _navigationBar = [[DefaultNavigationBar alloc] initWithController:self frame:CGRectMake(0, 0, 320, 43) title:@""];
     [self.view addSubview:_navigationBar];
 

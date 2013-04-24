@@ -67,7 +67,7 @@ static NSString *CellIdentifier = @"settingCell";
     
     [_settingTableView setDataSource:self];
     [_settingTableView setDelegate:self];
-    UIImageView *backGroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background"]];
+    UIImageView *backGroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.jpg"]];
     [_settingTableView setBackgroundView:backGroundImageView];
     [backGroundImageView release];
     
@@ -132,7 +132,7 @@ static NSString *CellIdentifier = @"settingCell";
     [self.settingTableView setScrollEnabled:YES];
     CGRect zoomRect = CGRectMake(0,0,320,460 + (iPhone5?88:0));
     [_settingTableView scrollRectToVisible:zoomRect animated:YES];
-    [self performSelector:@selector(refreshView) withObject:Nil afterDelay:.5];
+    [self performSelector:@selector(restoreView) withObject:Nil afterDelay:.5];
     
 }
 
@@ -356,9 +356,20 @@ static NSString *CellIdentifier = @"settingCell";
 
 
 /*重置窗口，取消已显示选项。*/
-- (void)refreshView{
-    [self.settingTableView setContentSize:CGSizeMake(_settingTableView.frame.size.width, _settingTableView.frame.size.height)];
+- (void)restoreView{
+    [UIView beginAnimations:@"HideTimePicker" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:.3];
+    [UIView setAnimationDelegate:self];
+    [self.timePicker setFrame:CGRectMake(0,460 + (iPhone5?88:0), 320, 216)];
+    [UIView commitAnimations];
+    [self.settingTableView setContentSize:CGSizeMake(self.settingTableView.frame.size.width, self.settingTableView.frame.size.height)];
     [self.timePicker setHidden:YES];
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [self restoreView];
+    [super viewWillDisappear:animated];
 }
 
 - (void)dealloc {

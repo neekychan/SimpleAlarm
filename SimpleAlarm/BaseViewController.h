@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "DefaultNavigationBar.h"
 
-@interface BaseViewController : UIViewController
+@interface BaseViewController : UIViewController {
+    
+}
 @property (retain,nonatomic) DefaultNavigationBar *navigationBar;
 
 @end

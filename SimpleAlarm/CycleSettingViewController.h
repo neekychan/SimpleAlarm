@@ -9,9 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "statics.h"
 #import "BaseViewController.h"
+#import "CycleCell.h"
 
-@interface CycleSettingViewController : BaseViewController{
-
+@interface CycleSettingViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>{
+    NSArray *cycleTile;
+    NSMutableDictionary *daySelects;
+    int tableViewHeightForRow;
 }
 
 - (IBAction)workDayBtnAction:(id)sender;
@@ -19,5 +22,6 @@
 - (IBAction)customBtnAction:(id)sender;
 @property (retain, nonatomic) IBOutlet UIImageView *selectLineImageView;
 
+@property (retain, nonatomic) IBOutlet UITableView *cycleTableView;
 
 @end
