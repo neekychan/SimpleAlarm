@@ -33,6 +33,8 @@
 
 @implementation AddAlarmViewController
 
+@synthesize setting;
+
 static NSString *CellIdentifier = @"settingCell";
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -44,15 +46,16 @@ static NSString *CellIdentifier = @"settingCell";
     return self;
 }
 
-
+- (id)initWithSetting:(NSDictionary *)settings {
+    
+    [self initWithNibName:@"AddAlarmViewController" bundle:Nil];
+    [self setSetting:settings];
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self.navigationBar setTitle:@"添加闹钟"];
-    [self.navigationBar addForwardButton:@"保存" action:@selector(saveBtnAction)];
-    [self.navigationBar addBackButton:@"返回" action:@selector(returnBtnAction)];
     
     isMessageTextViewEmpty = YES;
     
@@ -62,11 +65,32 @@ static NSString *CellIdentifier = @"settingCell";
     [_timePicker setDataSource:self];
     [_timePicker setDelegate:self];
     [_timePicker setFrame:CGRectMake(0, 460 + (iPhone5?88:0), 320, 216)];
-    [_timePicker selectRow:kSETTING_TIMEPICKER_DEFAULT_SELECT_HOUR inComponent:kSETTING_TIMEPICKER_COLUMN_HOUR animated:NO];
-    [_timePicker selectRow:kSETTING_TIMEPICKER_DEFAULT_SELECT_MINUS inComponent:kSETTING_TIMEPICKER_COLUMN_MINUS animated:NO];
+    
+    if(setting) {
+        [self.navigationBar setTitle:@"编辑闹钟"];
+        [self.navigationBar addForwardButton:@"保存" action:@selector(saveBtnAction)];
+        [self.navigationBar addBackButton:@"返回" action:@selector(returnBtnAction)];
+        
+        NSDateComponents *components = [DateHelper componentsWithDate:[NSDate date]];
+        NSInteger mins = [components minute];
+        NSInteger hour = [components hour];
+        
+        [_timePicker selectRow:hour inComponent:kSETTING_TIMEPICKER_COLUMN_HOUR animated:NO];
+        [_timePicker selectRow:mins inComponent:kSETTING_TIMEPICKER_COLUMN_MINUS animated:NO];
+        
+    } else {
+        [self.navigationBar setTitle:@"添加闹钟"];
+        [self.navigationBar addForwardButton:@"保存" action:@selector(saveBtnAction)];
+        [self.navigationBar addBackButton:@"返回" action:@selector(returnBtnAction)];
+        [_timePicker selectRow:kSETTING_TIMEPICKER_DEFAULT_SELECT_HOUR inComponent:kSETTING_TIMEPICKER_COLUMN_HOUR animated:NO];
+        [_timePicker selectRow:kSETTING_TIMEPICKER_DEFAULT_SELECT_MINUS inComponent:kSETTING_TIMEPICKER_COLUMN_MINUS animated:NO];
+    }
+    
+
     
     [_settingTableView setDataSource:self];
     [_settingTableView setDelegate:self];
+    
     UIImageView *backGroundImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"background.jpg"]];
     [_settingTableView setBackgroundView:backGroundImageView];
     [backGroundImageView release];
@@ -186,7 +210,7 @@ static NSString *CellIdentifier = @"settingCell";
     SettingViewCell *cell = (SettingViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == Nil) {
-        cell = [[[SettingViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[SettingViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     [cell setBackgroundColor:UIColor.whiteColor];
@@ -199,8 +223,17 @@ static NSString *CellIdentifier = @"settingCell";
             cell.iConImageView.image = iconImage;
             
             switch (indexPath.row) {
-                case kSETTING_SECTION_TIMER_TIME:
-                    cell.contentLabel.text = @"07:30";
+                case kSETTING_SECTION_TIMER_TIME:{
+                    
+                    if (setting) {
+                        NSDateComponents *component = [DateHelper componentsWithDate:[NSDate date]];
+                        NSString *text = [NSString stringWithFormat:@"%@:%@",[DateHelper decadeNumberFormat:component.hour],[DateHelper decadeNumberFormat:component.minute]];
+                        cell.contentLabel.text = text;
+                    } else {
+                        cell.contentLabel.text = @"07:30";
+                    }
+
+                }
                     break;
                 case kSETTING_SECTION_TIMER_CYCLE:
                     cell.contentLabel.text = @"工作日";

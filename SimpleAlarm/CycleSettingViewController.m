@@ -64,7 +64,7 @@ static NSString *CellIdentifier = @"cycleCell";
     CycleCell *cell = (CycleCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == Nil) {
-        cell = [[[CycleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[CycleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         
         CGRect rect = cell.bounds;
         rect.size.height = tableViewHeightForRow;
@@ -90,6 +90,8 @@ static NSString *CellIdentifier = @"cycleCell";
         [cell setTick:NO];
     }
     
+    
+    
     return cell;
 }
 
@@ -106,7 +108,8 @@ static NSString *CellIdentifier = @"cycleCell";
         [daySelects removeObjectForKey:key];
     }
     
-    [tableView reloadData];
+    [self selectLineMove:3];
+    
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -124,7 +127,7 @@ static NSString *CellIdentifier = @"cycleCell";
     
     [daySelects removeAllObjects];
     
-    for(int i = 1;i <=7;i++) {
+    for(int i = 1;i <=5;i++) {
         NSString *key = [NSString stringWithFormat:@"%d",i];
         [daySelects setValue:key forKey:key];
     }

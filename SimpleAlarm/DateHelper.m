@@ -25,4 +25,20 @@
     NSString *dateStr = [formatter stringFromDate:date];
     return dateStr;
 }
+
++ (NSDateComponents *)componentsWithDate:(NSDate *)date {
+    NSInteger flag = NSSecondCalendarUnit | NSMinuteCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:flag fromDate:date];
+    return components;
+}
+
++ (NSString *)decadeNumberFormat:(int)number {
+    
+    
+    if(number < 10) {
+        return [NSString stringWithFormat:@"0%d",number];
+    }
+
+    return [NSString stringWithFormat:@"%d",number];
+}
 @end

@@ -49,7 +49,8 @@
 
 - (void)addAlarmAction {
     //[db addAlarmClock:Nil];
-    AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithNibName:@"AddAlarmViewController" bundle:Nil];
+    //AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithNibName:@"AddAlarmViewController" bundle:Nil];
+    AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithSetting:[[NSDictionary alloc] init]];
     [self.navigationController pushViewController:addAlarmViewController animated:YES];
     [addAlarmViewController release];
 }
@@ -86,7 +87,7 @@
     AlarmListCell *cell = (AlarmListCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if(cell == Nil) {
-        cell = [[[AlarmListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
+        cell = [[AlarmListCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
     [cell initWithAlarmRecord:record];
