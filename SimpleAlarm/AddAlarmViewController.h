@@ -12,6 +12,7 @@
 
 @class SettingViewCell;
 @class DefaultNavigationBar;
+@class AlarmRecord;
 
 
 
@@ -35,11 +36,11 @@
 @property (retain, nonatomic) IBOutlet UITableView *settingTableView;
 @property (retain, nonatomic) IBOutlet UITextView *messageTextView;
 @property (retain, nonatomic) IBOutlet UIPickerView *timePicker;
-@property (retain, nonatomic) NSDictionary *setting;
+@property (retain, nonatomic) AlarmRecord *alarmRecord;
 
 
 - (void)returnBtnAction;
 - (void)saveBtnAction;
-- (id)initWithSetting:(NSDictionary *)settings;
+- (id)initWithAlarmRecord:(AlarmRecord *)record;
 
 @end

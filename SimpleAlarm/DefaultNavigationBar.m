@@ -21,24 +21,21 @@
 
 - (id)initWithController:(UIViewController *)ctr frame:(CGRect)frame title:(NSString *)t{
     
-    [self initWithFrame:frame];
-    
-    _navigationItem = [[UINavigationItem alloc] init];
-    [self pushNavigationItem:_navigationItem animated:NO];
-    
-    [self setTitle:t];
-    self.controller = ctr;
-    self.controller.navigationController.navigationBar.hidden = YES;
-    
-    UIImage *image = [UIImage imageNamed:@"h_navigationbar.png"];
-    UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:image];
-    [self setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
-    
-    [backgroundImageView release];
-    
-    
-
-
+    self = [super initWithFrame:frame];
+    if (self) {
+        _navigationItem = [[UINavigationItem alloc] init];
+        [self pushNavigationItem:_navigationItem animated:NO];
+        
+        [self setTitle:t];
+        self.controller = ctr;
+        self.controller.navigationController.navigationBar.hidden = YES;
+        
+        UIImage *image = [UIImage imageNamed:@"navigationbar"];
+        UIImageView *backgroundImageView = [[UIImageView alloc] initWithImage:image];
+        [self setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+        
+        [backgroundImageView release];
+    }
     
     return self;
 }
@@ -54,15 +51,13 @@
     [backButton setTitle:title forState:UIControlStateNormal];
     [backButton addTarget:self.controller action:selector forControlEvents:UIControlEventTouchUpInside];
     
-    UIImage *upImage = [UIImage imageNamed:@"navi_button_back_up.png"];
-    UIImage *downImage = [UIImage imageNamed:@"navi_button_back_down.png"];
+    UIImage *upImage = [UIImage imageNamed:@"navi_button_back_up"];
+    UIImage *downImage = [UIImage imageNamed:@"navi_button_back_down"];
     [backButton setBackgroundImage:upImage forState:UIControlStateNormal];
     [backButton setBackgroundImage:downImage forState:UIControlStateHighlighted];
-    [upImage release];
-    [downImage release];
+
 
     UIBarButtonItem *backBarButton = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    [backButton release];
     
     _navigationItem.leftBarButtonItem = backBarButton;
 
@@ -80,15 +75,12 @@
     [forwardButton setTitle:title forState:UIControlStateNormal];
     [forwardButton addTarget:self.controller action:selector forControlEvents:UIControlEventTouchUpInside];
     
-    UIImage *upImage = [UIImage imageNamed:@"navi_button_forward_up.png"];
-    UIImage *downImage = [UIImage imageNamed:@"navi_button_forward_down.png"];
+    UIImage *upImage = [UIImage imageNamed:@"navi_button_forward_up"];
+    UIImage *downImage = [UIImage imageNamed:@"navi_button_forward_down"];
     [forwardButton setBackgroundImage:upImage forState:UIControlStateNormal];
     [forwardButton setBackgroundImage:downImage forState:UIControlStateHighlighted];
-    [upImage release];
-    [downImage release];
     
     UIBarButtonItem *forwardBarButton = [[UIBarButtonItem alloc] initWithCustomView:forwardButton];
-    [forwardButton release];
     
     _navigationItem.rightBarButtonItem = forwardBarButton;
     
@@ -107,16 +99,12 @@
     [leftButton setTitle:title forState:UIControlStateNormal];
     [leftButton addTarget:self.controller action:selector forControlEvents:UIControlEventTouchUpInside];
     
-    UIImage *upImage = [UIImage imageNamed:@"navi_button_forward_up.png"];
-    UIImage *downImage = [UIImage imageNamed:@"navi_button_forward_down.png"];
+    UIImage *upImage = [UIImage imageNamed:@"navi_button_forward_up"];
+    UIImage *downImage = [UIImage imageNamed:@"navi_button_forward_down"];
     [leftButton setBackgroundImage:upImage forState:UIControlStateNormal];
     [leftButton setBackgroundImage:downImage forState:UIControlStateHighlighted];
-    [upImage release];
-    [downImage release];
     
     UIBarButtonItem *leftBarButton = [[UIBarButtonItem alloc] initWithCustomView:leftButton];
-    [leftButton release];
-    
     _navigationItem.leftBarButtonItem = leftBarButton;
     
     [leftBarButton release];

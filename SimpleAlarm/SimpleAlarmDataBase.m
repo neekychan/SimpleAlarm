@@ -12,12 +12,9 @@
 
 static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
 
-- (void)addAlarmClock:(NSDictionary *)setting{//type,cycle,time,rest_time,message
+- (void)addAlarmClock:(AlarmRecord *)alarmRecord{//type,cycle,time,rest_time,message
     
-    
-    NSDate *date = (NSDate *)[setting objectForKey:DB_RECORD_SETTING_DATE];
-    
-    [db executeUpdate:@"INSERT INTO SIMPLEALARM (type,cycle,time,rest_time,message) VALUES(?,?,?,?,?)",[NSNumber numberWithInt:1],@"1,2,3,4,5",date,[NSNumber numberWithInt:15],@"No Message"];
+    [db executeUpdate:@"INSERT INTO SIMPLEALARM (type,cycle,time,rest_time,message) VALUES(?,?,?,?,?)",[NSNumber numberWithInt:alarmRecord.type],alarmRecord.cycle,alarmRecord.time,[NSNumber numberWithInt:alarmRecord.restTime],alarmRecord.message];
     FMResultSet *result = [db executeQuery:@"SELECT * FROM SIMPLEALARM"];
     while([result next]){
         NSLog(@"Type:%d,Cycle:%@,Time:%@,Rest_Time:%d,Message:%@",[result intForColumn:@"type"],[result stringForColumn:@"cycle"],[[result dateForColumn:@"time"] description],[result intForColumn:@"rest_time"],[result stringForColumn:@"message"]);
@@ -45,12 +42,12 @@ static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
         record.type = [result intForColumn:@"type"];
         record.cycle = [result stringForColumn:@"cycle"];
         record.time = [result dateForColumn:@"time"];
-        record.rest_time = [result intForColumn:@"rest_time"];
+        record.restTime = [result intForColumn:@"rest_time"];
         record.message = [result stringForColumn:@"message"];
         
         //NSValue *miValue = [NSValue valueWithBytes:&record objCType:@encode(AlarmRecord)]; // encode using the type name
         [alarms addObject:record];
-
+        [record release];
         
         NSLog(@"Type:%d,Cycle:%@,Time:%@,Rest_Time:%d,Message:%@",
               [result intForColumn:@"type"],

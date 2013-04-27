@@ -6,6 +6,8 @@
 	<dict>
 		<key>SimpleAlarm.xcscheme</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
@@ -13,6 +15,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>64B0470516B9217E009C936F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BE14001A172B7E58009BB954</key>
 		<dict>
 			<key>primary</key>
 			<true/>

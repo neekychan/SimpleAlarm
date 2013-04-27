@@ -33,7 +33,7 @@
 
 @implementation AddAlarmViewController
 
-@synthesize setting;
+@synthesize alarmRecord;
 
 static NSString *CellIdentifier = @"settingCell";
 
@@ -46,10 +46,12 @@ static NSString *CellIdentifier = @"settingCell";
     return self;
 }
 
-- (id)initWithSetting:(NSDictionary *)settings {
+- (id)initWithAlarmRecord:(AlarmRecord *)record {
     
-    [self initWithNibName:@"AddAlarmViewController" bundle:Nil];
-    [self setSetting:settings];
+    self = [super initWithNibName:@"AddAlarmViewController" bundle:Nil];
+    if(self) {
+        [self setAlarmRecord:record];
+    }
     return self;
 }
 
@@ -66,15 +68,16 @@ static NSString *CellIdentifier = @"settingCell";
     [_timePicker setDelegate:self];
     [_timePicker setFrame:CGRectMake(0, 460 + (iPhone5?88:0), 320, 216)];
     
-    if(setting) {
+    if(alarmRecord) {
+        
         [self.navigationBar setTitle:@"编辑闹钟"];
         [self.navigationBar addForwardButton:@"保存" action:@selector(saveBtnAction)];
         [self.navigationBar addBackButton:@"返回" action:@selector(returnBtnAction)];
         
-        NSDateComponents *components = [DateHelper componentsWithDate:[NSDate date]];
+        NSDateComponents *components = [DateHelper componentsWithDate:[alarmRecord time]];
         NSInteger mins = [components minute];
         NSInteger hour = [components hour];
-        
+        //将时间选择器的刻度与当前时间保持一致
         [_timePicker selectRow:hour inComponent:kSETTING_TIMEPICKER_COLUMN_HOUR animated:NO];
         [_timePicker selectRow:mins inComponent:kSETTING_TIMEPICKER_COLUMN_MINUS animated:NO];
         
@@ -164,9 +167,9 @@ static NSString *CellIdentifier = @"settingCell";
     if(range.length != 1 && [text isEqualToString:@"\n"]){
         [self hideKeyBoard:textView];
         return NO;
-    } else {
-        return YES;
     }
+    
+    return YES;
 }
 
 #pragma mark -tableview delegate
@@ -210,7 +213,7 @@ static NSString *CellIdentifier = @"settingCell";
     SettingViewCell *cell = (SettingViewCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == Nil) {
-        cell = [[SettingViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[[SettingViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
     }
     
     [cell setBackgroundColor:UIColor.whiteColor];
@@ -225,8 +228,8 @@ static NSString *CellIdentifier = @"settingCell";
             switch (indexPath.row) {
                 case kSETTING_SECTION_TIMER_TIME:{
                     
-                    if (setting) {
-                        NSDateComponents *component = [DateHelper componentsWithDate:[NSDate date]];
+                    if (alarmRecord) {
+                        NSDateComponents *component = [DateHelper componentsWithDate:[alarmRecord time]];
                         NSString *text = [NSString stringWithFormat:@"%@:%@",[DateHelper decadeNumberFormat:component.hour],[DateHelper decadeNumberFormat:component.minute]];
                         cell.contentLabel.text = text;
                     } else {
@@ -235,11 +238,32 @@ static NSString *CellIdentifier = @"settingCell";
 
                 }
                     break;
-                case kSETTING_SECTION_TIMER_CYCLE:
-                    cell.contentLabel.text = @"工作日";
+                case kSETTING_SECTION_TIMER_CYCLE:{
+                    
+                    NSString *title = @"工作日";
+                    
+                    if(alarmRecord) {
+                        title = @"自定义";
+                        NSString *cycle = alarmRecord.cycle;
+                        NSArray *cycles = [cycle componentsSeparatedByString:@","];
+                        if ([cycles containsObject:@"6"] && [cycles containsObject:@"7"] && cycles.count == 2) {
+                            title = @"周末";
+                        } else if(cycles.count == 5 && !([cycles containsObject:@"6"] && [cycles containsObject:@"7"])){
+                            title = @"工作日";
+                        }
+                    }
+                    cell.contentLabel.text = title;
                     break;
-                case kSETTING_SECTION_TIMER_REST_TIME:
-                    cell.contentLabel.text = @"5分钟";
+                }
+                case kSETTING_SECTION_TIMER_REST_TIME:{
+                    if(alarmRecord) {
+                        NSString *restTime = [NSString stringWithFormat:@"%d分钟",alarmRecord.restTime];
+                        cell.contentLabel.text = restTime;
+                    } else {
+                        cell.contentLabel.text = @"10分钟";
+                    }
+
+                }
                 default:
                     break;
             }
@@ -249,6 +273,12 @@ static NSString *CellIdentifier = @"settingCell";
             [cell setTextViewMode:YES];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             [cell setDelegate:self];
+            
+            if(alarmRecord) {
+                cell.messageTextView.text = alarmRecord.message;
+                cell.messageTextView.textColor = [UIColor blackColor];
+                isMessageTextViewEmpty = NO;
+            }
         }
             break;
         default:

@@ -64,12 +64,12 @@ static NSString *CellIdentifier = @"cycleCell";
     CycleCell *cell = (CycleCell *)[tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     if (cell == Nil) {
-        cell = [[CycleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[[CycleCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier] autorelease];
         
         CGRect rect = cell.bounds;
         rect.size.height = tableViewHeightForRow;
         [cell setBounds:rect];
-        
+        //根据屏幕尺寸适配单元格高度
         
     }
     
@@ -82,15 +82,7 @@ static NSString *CellIdentifier = @"cycleCell";
     
     [cell setBackgroundColor:UIColor.whiteColor];
     [cell.dayTitle setText:[cycleTile objectAtIndex:indexPath.row]];
-    
-
-    if([daySelects objectForKey:[NSString stringWithFormat:@"%d",indexPath.row + 1]] != Nil) {
-        [cell setTick:YES];
-    } else {
-        [cell setTick:NO];
-    }
-    
-    
+    [cell setTick:[daySelects objectForKey:[NSString stringWithFormat:@"%d",indexPath.row + 1]] != Nil ? YES : NO];
     
     return cell;
 }
@@ -167,7 +159,7 @@ static NSString *CellIdentifier = @"cycleCell";
             break;
     }
     
-    _selectLineImageView.center = cPoint;
+    self.selectLineImageView.center = cPoint;
     [UIView commitAnimations];
     [self.cycleTableView reloadData];
 }

@@ -14,6 +14,16 @@
 
     NSString *dateStr = [NSString stringWithFormat:@"%d-%d-%d %d:%d:%d",year,month,day,hour,minute,second];
     NSDateFormatter* formater = [[NSDateFormatter alloc] init];
+    [formater setDateFormat:kDateFormatterYearMonthDayHourMinuteSecond];
+    NSDate* date = [formater dateFromString:dateStr];
+    [formater release];
+    return date;
+}
+
++ (NSDate *)dateUTCWithYear:(int)year month:(int)month day:(int)day hour:(int)hour minute:(int)minute second:(int)second {
+    
+    NSString *dateStr = [NSString stringWithFormat:@"%d-%d-%d %d:%d:%d",year,month,day,hour,minute,second];
+    NSDateFormatter* formater = [[NSDateFormatter alloc] init];
     [formater setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
     [formater setDateFormat:kDateFormatterYearMonthDayHourMinuteSecond];
     NSDate* date = [formater dateFromString:dateStr];
@@ -32,13 +42,7 @@
     return components;
 }
 
-+ (NSString *)decadeNumberFormat:(int)number {
-    
-    
-    if(number < 10) {
-        return [NSString stringWithFormat:@"0%d",number];
-    }
-
-    return [NSString stringWithFormat:@"%d",number];
++ (NSString *)decadeNumberFormat:(int)number {    
+    return number < 10 ? [NSString stringWithFormat:@"0%d",number] : [NSString stringWithFormat:@"%d",number];
 }
 @end

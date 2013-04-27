@@ -82,7 +82,7 @@
 
 - (NSString *)dayTipByDays:(NSInteger)_days{
     
-    NSString *tip;
+    NSString *tip = @"";
     
     
     switch (_days) {
@@ -94,7 +94,8 @@
             break;
             
         default:
-            tip = [[NSString alloc]initWithFormat:@"%d天后",(int)_days];
+            
+            tip = [[[NSString alloc]initWithFormat:@"%d天后",(int)_days] autorelease];
             break;
     }
     
@@ -108,7 +109,7 @@
     NSInteger hours = interval / 3600;
     NSInteger mins = ((int)interval % 3600) / 60;
     
-    NSString *tip = Nil;
+    NSString *tip = @"";
     
     if(hours == 0){
         tip = [[NSString alloc] initWithFormat:@"%d分后响铃",mins];
@@ -119,7 +120,7 @@
     }
     
     
-    return tip;
+    return [tip autorelease];
 }
 
 - (void)dealloc {

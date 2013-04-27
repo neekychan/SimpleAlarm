@@ -11,18 +11,9 @@
 @interface AlarmRecord : NSObject
 @property int ID;
 @property int type;
-@property (nonatomic,retain) NSString *cycle;
+@property (copy,nonatomic) NSString *cycle;
 @property (nonatomic,retain) NSDate *time;
-@property int rest_time;
-@property (nonatomic,retain) NSString *message;
-/*
- typedef struct {
- int ID;
- int type;
- NSString *cycle;
- NSDate *time;
- int rest_time;
- NSString *message;
- }AlarmRecord;
- */
+@property int restTime;
+@property (copy,nonatomic) NSString *message;
+
 @end

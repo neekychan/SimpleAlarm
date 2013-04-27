@@ -134,6 +134,13 @@
 		64F23A1716C7DD5C009257A0 /* SettingViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewCell.h; sourceTree = "<group>"; };
 		64F23A1816C7DD5C009257A0 /* SettingViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewCell.m; sourceTree = "<group>"; };
 		64F23A1B16C7E2A8009257A0 /* SettingViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewCell.xib; sourceTree = "<group>"; };
+		BE14005A172B7E59009BB954 /* SimpleAlarm copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "SimpleAlarm copy-Info.plist"; path = "/Users/woodn/Chan/SimpleAlarm/SimpleAlarm copy-Info.plist"; sourceTree = "<absolute>"; };
+		BE14005B172B7E5E009BB954 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainViewController.xib; path = "Resources-iPad/SimpleAlarm/MainViewController.xib"; sourceTree = "<group>"; };
+		BE14005C172B7E5E009BB954 /* AlarmListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AlarmListCell.xib; path = "Resources-iPad/SimpleAlarm/AlarmListCell.xib"; sourceTree = "<group>"; };
+		BE14005D172B7E5E009BB954 /* AddAlarmViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AddAlarmViewController.xib; path = "Resources-iPad/SimpleAlarm/AddAlarmViewController.xib"; sourceTree = "<group>"; };
+		BE14005E172B7E5E009BB954 /* SettingViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SettingViewCell.xib; path = "Resources-iPad/SimpleAlarm/SettingViewCell.xib"; sourceTree = "<group>"; };
+		BE14005F172B7E5E009BB954 /* CycleSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CycleSettingViewController.xib; path = "Resources-iPad/SimpleAlarm/CycleSettingViewController.xib"; sourceTree = "<group>"; };
+		BE140060172B7E5E009BB954 /* CycleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CycleCell.xib; path = "Resources-iPad/SimpleAlarm/CycleCell.xib"; sourceTree = "<group>"; };
 		BEA0BCE4172768AE00E0D27D /* CycleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleCell.h; sourceTree = "<group>"; };
 		BEA0BCE5172768AE00E0D27D /* CycleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleCell.m; sourceTree = "<group>"; };
 		BEA0BCE71727691400E0D27D /* CycleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CycleCell.xib; sourceTree = "<group>"; };
@@ -175,10 +182,12 @@
 		64B046FB16B9217E009C936F = {
 			isa = PBXGroup;
 			children = (
+				BE140059172B7E58009BB954 /* Resources-iPad */,
 				64C92B8716BC12E8007C0F7E /* libsqlite3.dylib */,
 				64B0471016B9217E009C936F /* SimpleAlarm */,
 				64B0470916B9217E009C936F /* Frameworks */,
 				64B0470716B9217E009C936F /* Products */,
+				BE14005A172B7E59009BB954 /* SimpleAlarm copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -235,25 +244,25 @@
 		64B0472C16B921FB009C936F /* res */ = {
 			isa = PBXGroup;
 			children = (
+				64D1D44B16C54FDF00BE9C26 /* addrecord_menu_bg2@2x.png */,
+				64B0472D16B9223B009C936F /* background@2x.jpg */,
+				6466268E1720300700AC466C /* cycle_title_bg@2x.png */,
+				6466269017203B5200AC466C /* cycle_title_select@2x.png */,
+				6466269217203CDB00AC466C /* cycle_title_select_line@2x.png */,
+				64D1D44F16C54FDF00BE9C26 /* h_addrecord_menu_bg1.png */,
+				64D1D44E16C54FDF00BE9C26 /* icon_clock@2x.png */,
+				64D1D44D16C54FDF00BE9C26 /* icon_cycle@2x.png */,
+				64D1D44C16C54FDF00BE9C26 /* icon_rest_time@2x.png */,
+				BEA0BCE91727702100E0D27D /* icon_tick@2x.png */,
+				BEA0BCEB1727D12F00E0D27D /* icon_tick_unselected@2x.png */,
+				646626961720499A00AC466C /* itemboard@2x.png */,
+				64B0477816B94FF1009C936F /* mainboard_alarm_icon@2x.png */,
+				64941A0D16C14A5100127237 /* mainboard_cell_extand@2x.png */,
 				6444C42C16F8BF5C0053D9A7 /* navi_button_back_down@2x.png */,
 				6444C42D16F8BF5C0053D9A7 /* navi_button_back_up@2x.png */,
 				6444C42E16F8BF5C0053D9A7 /* navi_button_forward_down@2x.png */,
 				6444C42F16F8BF5C0053D9A7 /* navi_button_forward_up@2x.png */,
-				64D1D44B16C54FDF00BE9C26 /* addrecord_menu_bg2@2x.png */,
-				6466268E1720300700AC466C /* cycle_title_bg@2x.png */,
-				646626961720499A00AC466C /* itemboard@2x.png */,
-				64D1D44C16C54FDF00BE9C26 /* icon_rest_time@2x.png */,
-				64D1D44D16C54FDF00BE9C26 /* icon_cycle@2x.png */,
-				64D1D44E16C54FDF00BE9C26 /* icon_clock@2x.png */,
-				BEA0BCE91727702100E0D27D /* icon_tick@2x.png */,
-				BEA0BCEB1727D12F00E0D27D /* icon_tick_unselected@2x.png */,
-				64D1D44F16C54FDF00BE9C26 /* h_addrecord_menu_bg1.png */,
-				64941A0D16C14A5100127237 /* mainboard_cell_extand@2x.png */,
-				64B0477816B94FF1009C936F /* mainboard_alarm_icon@2x.png */,
-				6466269017203B5200AC466C /* cycle_title_select@2x.png */,
-				6466269217203CDB00AC466C /* cycle_title_select_line@2x.png */,
 				64B0473316B92961009C936F /* navigationbar@2x.png */,
-				64B0472D16B9223B009C936F /* background@2x.jpg */,
 				64B0472F16B9223B009C936F /* seperate_line@2x.png */,
 			);
 			name = res;
@@ -272,12 +281,11 @@
 		64B0477B16B97539009C936F /* db */ = {
 			isa = PBXGroup;
 			children = (
+				BEA0BCF11728D7EA00E0D27D /* model */,
 				64B0478B16B97562009C936F /* fmdb */,
-				6433903616C0DDBB00ABA629 /* AlarmRecord.h */,
 				64B0479D16B984C8009C936F /* AlarmClockDAO.h */,
 				64B047A016B98586009C936F /* SimpleAlarmDataBase.h */,
 				64B047A116B98586009C936F /* SimpleAlarmDataBase.m */,
-				6433903916C0DF3600ABA629 /* AlarmRecord.m */,
 			);
 			name = db;
 			sourceTree = "<group>";
@@ -314,6 +322,19 @@
 			name = AddAlarm;
 			sourceTree = "<group>";
 		};
+		BE140059172B7E58009BB954 /* Resources-iPad */ = {
+			isa = PBXGroup;
+			children = (
+				BE14005B172B7E5E009BB954 /* MainViewController.xib */,
+				BE14005C172B7E5E009BB954 /* AlarmListCell.xib */,
+				BE14005D172B7E5E009BB954 /* AddAlarmViewController.xib */,
+				BE14005E172B7E5E009BB954 /* SettingViewCell.xib */,
+				BE14005F172B7E5E009BB954 /* CycleSettingViewController.xib */,
+				BE140060172B7E5E009BB954 /* CycleCell.xib */,
+			);
+			name = "Resources-iPad";
+			sourceTree = "<group>";
+		};
 		BEA0BCE21727685C00E0D27D /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,6 +346,15 @@
 				BEA0BCE71727691400E0D27D /* CycleCell.xib */,
 			);
 			name = Cell;
+			sourceTree = "<group>";
+		};
+		BEA0BCF11728D7EA00E0D27D /* model */ = {
+			isa = PBXGroup;
+			children = (
+				6433903616C0DDBB00ABA629 /* AlarmRecord.h */,
+				6433903916C0DF3600ABA629 /* AlarmRecord.m */,
+			);
+			name = model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
