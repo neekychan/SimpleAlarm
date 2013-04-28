@@ -134,7 +134,6 @@
 		64F23A1716C7DD5C009257A0 /* SettingViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewCell.h; sourceTree = "<group>"; };
 		64F23A1816C7DD5C009257A0 /* SettingViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewCell.m; sourceTree = "<group>"; };
 		64F23A1B16C7E2A8009257A0 /* SettingViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SettingViewCell.xib; sourceTree = "<group>"; };
-		BE14005A172B7E59009BB954 /* SimpleAlarm copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "SimpleAlarm copy-Info.plist"; path = "/Users/woodn/Chan/SimpleAlarm/SimpleAlarm copy-Info.plist"; sourceTree = "<absolute>"; };
 		BE14005B172B7E5E009BB954 /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = MainViewController.xib; path = "Resources-iPad/SimpleAlarm/MainViewController.xib"; sourceTree = "<group>"; };
 		BE14005C172B7E5E009BB954 /* AlarmListCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AlarmListCell.xib; path = "Resources-iPad/SimpleAlarm/AlarmListCell.xib"; sourceTree = "<group>"; };
 		BE14005D172B7E5E009BB954 /* AddAlarmViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AddAlarmViewController.xib; path = "Resources-iPad/SimpleAlarm/AddAlarmViewController.xib"; sourceTree = "<group>"; };
@@ -187,7 +186,6 @@
 				64B0471016B9217E009C936F /* SimpleAlarm */,
 				64B0470916B9217E009C936F /* Frameworks */,
 				64B0470716B9217E009C936F /* Products */,
-				BE14005A172B7E59009BB954 /* SimpleAlarm copy-Info.plist */,
 			);
 			sourceTree = "<group>";
 		};
@@ -509,7 +507,7 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiao ZhengYang (M24KZ4F4MF)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -523,6 +521,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F1373F2-FD33-4C03-A152-618F8FB98162";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -536,7 +535,8 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Xiao ZhengYang (M24KZ4F4MF)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -544,6 +544,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8EC4086E-D646-41BE-A51D-5755BFF3E96E";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
