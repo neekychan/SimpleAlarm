@@ -33,7 +33,8 @@
 
 @implementation AddAlarmViewController
 
-@synthesize alarmRecord;
+@synthesize setting;
+
 
 static NSString *CellIdentifier = @"settingCell";
 
@@ -50,10 +51,11 @@ static NSString *CellIdentifier = @"settingCell";
     
     self = [super initWithNibName:@"AddAlarmViewController" bundle:Nil];
     if(self) {
-        [self setAlarmRecord:record];
+        [self setSetting:record];
     }
     return self;
 }
+
 
 - (void)viewDidLoad
 {
@@ -63,18 +65,25 @@ static NSString *CellIdentifier = @"settingCell";
     
     settingTiles = [[NSArray alloc] initWithObjects:@"时间",@"周期",@"小睡",nil];
     settingIcons = [[NSArray alloc] initWithObjects:@"icon_clock",@"icon_cycle",@"icon_rest_time", nil];
+    alarmRecord = [[AlarmRecord alloc] init];
     
     [_timePicker setDataSource:self];
     [_timePicker setDelegate:self];
-    [_timePicker setFrame:CGRectMake(0, 460 + (iPhone5?88:0), 320, 216)];
-    
-    if(alarmRecord) {
+    [_timePicker setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT, 320, 216)];
+    [_resttimePickerView setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT, 320, 150)];
+    //实现圆角和阴影效果
+    _resttimePickerView.layer.cornerRadius = 6;
+    _resttimePickerView.layer.shadowOffset= CGSizeMake(0, -2);
+    _resttimePickerView.layer.shadowOpacity= .3;
+    _resttimePickerView.layer.shadowRadius= 2.0;
+
+    if(setting) {
         
         [self.navigationBar setTitle:@"编辑闹钟"];
         [self.navigationBar addForwardButton:@"保存" action:@selector(saveBtnAction)];
         [self.navigationBar addBackButton:@"返回" action:@selector(returnBtnAction)];
         
-        NSDateComponents *components = [DateHelper componentsWithDate:[alarmRecord time]];
+        NSDateComponents *components = [DateHelper componentsWithDate:[setting time]];
         NSInteger mins = [components minute];
         NSInteger hour = [components hour];
         //将时间选择器的刻度与当前时间保持一致
@@ -103,7 +112,8 @@ static NSString *CellIdentifier = @"settingCell";
     UINib *nib = [UINib nibWithNibName:@"SettingViewCell" bundle:nil];
     [_settingTableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
 
-    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc addObserver:self selector:@selector(cycleSelected:) name:@"cycleSelected" object:Nil];
     
 }
 
@@ -130,7 +140,6 @@ static NSString *CellIdentifier = @"settingCell";
 
 - (BOOL)textViewShouldBeginEditing:(UITextView*)textView {
     
-    [textView becomeFirstResponder];
     
     if (isMessageTextViewEmpty) {
         textView.text = @"";
@@ -140,22 +149,23 @@ static NSString *CellIdentifier = @"settingCell";
     
     
     [_settingTableView setContentSize:CGSizeMake(320, 960)];
-    
     CGRect zoomRect = CGRectMake(0,270 + (iPhone5?88:0),320,300);
     [_settingTableView scrollRectToVisible:zoomRect animated:YES];
     [self.settingTableView setScrollEnabled:NO];
-    //[_settingTableView scrollRectToVisible:CGRectMake(10, 300, 300, 200) animated:YES];
-    //[hiddenKeyBoardView setHidden:NO];
     
     return YES;
 }
 
 - (void) textViewDidEndEditing:(UITextView*)textView {
+    
     if(textView.text.length == 0){
         textView.textColor = [UIColor lightGrayColor];
         textView.text = @"如:起床以后要做些什么?";
         isMessageTextViewEmpty = YES;
     }
+    
+    alarmRecord.message = textView.text;
+    
     [self.settingTableView setScrollEnabled:YES];
     CGRect zoomRect = CGRectMake(0,0,320,460 + (iPhone5?88:0));
     [_settingTableView scrollRectToVisible:zoomRect animated:YES];
@@ -228,8 +238,8 @@ static NSString *CellIdentifier = @"settingCell";
             switch (indexPath.row) {
                 case kSETTING_SECTION_TIMER_TIME:{
                     
-                    if (alarmRecord) {
-                        NSDateComponents *component = [DateHelper componentsWithDate:[alarmRecord time]];
+                    if (setting) {
+                        NSDateComponents *component = [DateHelper componentsWithDate:[setting time]];
                         NSString *text = [NSString stringWithFormat:@"%@:%@",[DateHelper decadeNumberFormat:component.hour],[DateHelper decadeNumberFormat:component.minute]];
                         cell.contentLabel.text = text;
                     } else {
@@ -242,9 +252,9 @@ static NSString *CellIdentifier = @"settingCell";
                     
                     NSString *title = @"工作日";
                     
-                    if(alarmRecord) {
+                    if(setting) {
                         title = @"自定义";
-                        NSString *cycle = alarmRecord.cycle;
+                        NSString *cycle = setting.cycle;
                         NSArray *cycles = [cycle componentsSeparatedByString:@","];
                         if ([cycles containsObject:@"6"] && [cycles containsObject:@"7"] && cycles.count == 2) {
                             title = @"周末";
@@ -256,8 +266,8 @@ static NSString *CellIdentifier = @"settingCell";
                     break;
                 }
                 case kSETTING_SECTION_TIMER_REST_TIME:{
-                    if(alarmRecord) {
-                        NSString *restTime = [NSString stringWithFormat:@"%d分钟",alarmRecord.restTime];
+                    if(setting) {
+                        NSString *restTime = [NSString stringWithFormat:@"%d分钟",setting.restTime];
                         cell.contentLabel.text = restTime;
                     } else {
                         cell.contentLabel.text = @"10分钟";
@@ -274,8 +284,8 @@ static NSString *CellIdentifier = @"settingCell";
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             [cell setDelegate:self];
             
-            if(alarmRecord) {
-                cell.messageTextView.text = alarmRecord.message;
+            if(setting) {
+                cell.messageTextView.text = setting.message;
                 cell.messageTextView.textColor = [UIColor blackColor];
                 isMessageTextViewEmpty = NO;
             }
@@ -301,14 +311,14 @@ static NSString *CellIdentifier = @"settingCell";
                     
                 case kSETTING_SECTION_TIMER_TIME:
 
-                    if(self.timePicker.frame.origin.y >= 460){
+                    if(self.timePicker.frame.origin.y == APPLICATION_VIEW_HEIGHT){
                         
                         [self.timePicker setHidden:NO];
                         [UIView beginAnimations:@"ShowHideTimePicker" context:nil];
                         [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
                         [UIView setAnimationDuration:.3];
                         [UIView setAnimationDelegate:self];
-                        [self.timePicker setFrame:CGRectMake(0, 244 + (iPhone5?88:0), 320, 216)];
+                        [self.timePicker setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT - 216, 320, 216)];
                         [UIView commitAnimations];
                         
                     } else {
@@ -317,7 +327,7 @@ static NSString *CellIdentifier = @"settingCell";
                         [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
                         [UIView setAnimationDuration:.3];
                         [UIView setAnimationDelegate:self];
-                        [self.timePicker setFrame:CGRectMake(0,460 + (iPhone5?88:0), 320, 216)];
+                        [self.timePicker setFrame:CGRectMake(0,APPLICATION_VIEW_HEIGHT, 320, 216)];
                         [UIView commitAnimations];
                         [self.settingTableView deselectRowAtIndexPath:indexPath animated:YES];
                         
@@ -329,6 +339,25 @@ static NSString *CellIdentifier = @"settingCell";
                     [self.navigationController pushViewController:cycleSettingView animated:YES];
                     [self.settingTableView deselectRowAtIndexPath:indexPath animated:YES];
                     [cycleSettingView release];                    
+                }
+                    break;
+                case kSETTING_SECTION_TIMER_REST_TIME:{
+                    if([self.resttimePickerView frame].origin.y != (APPLICATION_VIEW_HEIGHT - 150)) {
+                        [UIView beginAnimations:@"showRestTimePicker" context:nil];
+                        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+                        [UIView setAnimationDuration:.3];
+                        [UIView setAnimationDelegate:self];
+                        [self.resttimePickerView setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT - 150, 320, 150)];
+                        [UIView commitAnimations];
+                    } else {
+                        [UIView beginAnimations:@"hideRestTimePicker" context:nil];
+                        [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+                        [UIView setAnimationDuration:.3];
+                        [UIView setAnimationDelegate:self];
+                        [self.resttimePickerView setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT, 320, 150)];
+                        [UIView commitAnimations];
+                    }
+        
                 }
                     break;
                 default:
@@ -404,7 +433,38 @@ static NSString *CellIdentifier = @"settingCell";
         }
         [currentCell.contentLabel setText:[NSString stringWithFormat:@"%@:%@",strHour,strMinus]];
     }
+    
+    alarmRecord.time = [DateHelper dateWithYear:0 month:0 day:0 hour:hour minute:minus second:0];
 
+}
+
+-(void) cycleSelected:(NSMutableDictionary *)dics{
+    
+    NSMutableString *cycle = [[NSMutableString alloc] init];
+    for(id key in dics.allKeys) {
+        NSString *value = [dics objectForKey:key];
+        [cycle appendFormat:@"%@,",value];
+    }
+    //删除结尾的逗号
+    [cycle deleteCharactersInRange:NSMakeRange(cycle.length - 1,1)];
+    alarmRecord.cycle = cycle;
+}
+
+#pragma mark -UIButton Action
+
+- (IBAction)fiveMinsBtnAction:(id)sender {
+    alarmRecord.restTime = 5;
+    [self restoreView];
+}
+
+- (IBAction)fifteenMinsBtnAction:(id)sender {
+    alarmRecord.restTime = 15;
+    [self restoreView];
+}
+
+- (IBAction)twentyMinsBtnAction:(id)sender {
+    alarmRecord.restTime = 20;
+    [self restoreView];
 }
 
 //隐藏键盘
@@ -424,11 +484,20 @@ static NSString *CellIdentifier = @"settingCell";
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:.3];
     [UIView setAnimationDelegate:self];
-    [self.timePicker setFrame:CGRectMake(0,460 + (iPhone5?88:0), 320, 216)];
+    [self.timePicker setFrame:CGRectMake(0,APPLICATION_VIEW_HEIGHT, 320, 216)];
     [UIView commitAnimations];
-    [self.settingTableView setContentSize:CGSizeMake(self.settingTableView.frame.size.width, self.settingTableView.frame.size.height)];
     [self.timePicker setHidden:YES];
+    [self.settingTableView setContentSize:CGSizeMake(self.settingTableView.frame.size.width, self.settingTableView.frame.size.height)];
+    [UIView beginAnimations:@"hideRestTimePicker" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+    [UIView setAnimationDuration:.3];
+    [UIView setAnimationDelegate:self];
+    [self.resttimePickerView setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT, 320, 150)];
+    [UIView commitAnimations];
 }
+
+
+
 
 - (void)viewWillDisappear:(BOOL)animated{
     [self restoreView];
@@ -442,15 +511,20 @@ static NSString *CellIdentifier = @"settingCell";
     [settingIcons release];
     [_messageTextView release];
     [_timePicker release];
+    [_resttimePickerView release];
     [super dealloc];
 }
 - (void)viewDidUnload {
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:@"cycleSelected" object:Nil];
     [self setSaveButton:nil];
     [self setSettingTableView:nil];
     settingIcons = Nil;
     settingTiles = Nil;
     [self setMessageTextView:nil];
     [self setTimePicker:nil];
+    [self setResttimePickerView:nil];
     [super viewDidUnload];
 }
 @end

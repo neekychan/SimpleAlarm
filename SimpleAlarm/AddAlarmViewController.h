@@ -29,18 +29,25 @@
     BOOL isMessageTextViewEmpty;
     SettingViewCell *currentCell;
     DefaultNavigationBar *_customNavigationBar;
-    //CycleSettingViewController *cycleSettingView;
+    AlarmRecord *alarmRecord;
 }
 
 @property (retain, nonatomic) IBOutlet UIButton *saveButton;
 @property (retain, nonatomic) IBOutlet UITableView *settingTableView;
 @property (retain, nonatomic) IBOutlet UITextView *messageTextView;
 @property (retain, nonatomic) IBOutlet UIPickerView *timePicker;
-@property (retain, nonatomic) AlarmRecord *alarmRecord;
+@property (retain, nonatomic) AlarmRecord *setting;
 
+
+@property (retain, nonatomic) IBOutlet UIView *resttimePickerView;
+- (IBAction)fiveMinsBtnAction:(id)sender;
 
 - (void)returnBtnAction;
 - (void)saveBtnAction;
 - (id)initWithAlarmRecord:(AlarmRecord *)record;
+
+- (IBAction)fifteenMinsBtnAction:(id)sender;
+- (IBAction)twentyMinsBtnAction:(id)sender;
+
 
 @end

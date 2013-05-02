@@ -18,6 +18,8 @@
 
 #define iPhone5_HEIGTH 1136
 
+#define APPLICATION_VIEW_HEIGHT [[UIScreen mainScreen] applicationFrame].size.height
+
 //DataBase SQLite 
 #define DB_NAME @"SIMPLEALARM"
 #define DB_SQL_CREATE_TABLE @"CREATE TABLE SIMPLEALARM (id INTEGER PRIMARY KEY AUTOINCREMENT,type INT NOT NULL ,cycle VARCHAR(45) NOT NULL ,time DATETIME NOT NULL ,rest_time INT NULL ,message VARCHAR(200) NULL)"

@@ -54,6 +54,8 @@ static NSString *CellIdentifier = @"cycleCell";
 #pragma mark -navigationbar delegate
 
 - (void)backButtonAction{
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc postNotificationName:@"cycleSelected" object:[daySelects retain]];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -101,7 +103,7 @@ static NSString *CellIdentifier = @"cycleCell";
     }
     
     [self selectLineMove:3];
-    
+
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -131,7 +133,7 @@ static NSString *CellIdentifier = @"cycleCell";
     
     [daySelects removeAllObjects];
     [daySelects setValue:[NSString stringWithFormat:@"%d",6] forKey:[NSString stringWithFormat:@"%d",6]];
-        [daySelects setValue:[NSString stringWithFormat:@"%d",7] forKey:[NSString stringWithFormat:@"%d",7]];
+    [daySelects setValue:[NSString stringWithFormat:@"%d",7] forKey:[NSString stringWithFormat:@"%d",7]];
     
     [self selectLineMove:2];
 }

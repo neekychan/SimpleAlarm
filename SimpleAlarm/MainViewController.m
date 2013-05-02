@@ -36,8 +36,6 @@
     [_alarmListView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//隐藏分割线
     [_alarmListView setShowsVerticalScrollIndicator:NO];
     self.alarmRecords = [db allAlarmRecords];
-    NSLog(@"AlarmRecords retianCount:%d",[self.alarmRecords  retainCount]);
-    
 }
 
 - (void)didReceiveMemoryWarning

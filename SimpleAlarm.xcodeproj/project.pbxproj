@@ -56,6 +56,7 @@
 		64E9A55116EF8091005D5CB0 /* DefaultNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E9A55016EF8091005D5CB0 /* DefaultNavigationBar.m */; };
 		64F23A1916C7DD5C009257A0 /* SettingViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F23A1816C7DD5C009257A0 /* SettingViewCell.m */; };
 		64F23A1C16C7E2A8009257A0 /* SettingViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64F23A1B16C7E2A8009257A0 /* SettingViewCell.xib */; };
+		BE26325817324ACA00DDFF8E /* resttime_picker_item_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE26325717324ACA00DDFF8E /* resttime_picker_item_bg@2x.png */; };
 		BEA0BCE6172768AE00E0D27D /* CycleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA0BCE5172768AE00E0D27D /* CycleCell.m */; };
 		BEA0BCE81727691400E0D27D /* CycleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEA0BCE71727691400E0D27D /* CycleCell.xib */; };
 		BEA0BCEA1727702100E0D27D /* icon_tick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA0BCE91727702100E0D27D /* icon_tick@2x.png */; };
@@ -140,6 +141,7 @@
 		BE14005E172B7E5E009BB954 /* SettingViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SettingViewCell.xib; path = "Resources-iPad/SimpleAlarm/SettingViewCell.xib"; sourceTree = "<group>"; };
 		BE14005F172B7E5E009BB954 /* CycleSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CycleSettingViewController.xib; path = "Resources-iPad/SimpleAlarm/CycleSettingViewController.xib"; sourceTree = "<group>"; };
 		BE140060172B7E5E009BB954 /* CycleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CycleCell.xib; path = "Resources-iPad/SimpleAlarm/CycleCell.xib"; sourceTree = "<group>"; };
+		BE26325717324ACA00DDFF8E /* resttime_picker_item_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resttime_picker_item_bg@2x.png"; sourceTree = "<group>"; };
 		BEA0BCE4172768AE00E0D27D /* CycleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleCell.h; sourceTree = "<group>"; };
 		BEA0BCE5172768AE00E0D27D /* CycleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleCell.m; sourceTree = "<group>"; };
 		BEA0BCE71727691400E0D27D /* CycleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CycleCell.xib; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 		64B0472C16B921FB009C936F /* res */ = {
 			isa = PBXGroup;
 			children = (
+				BE26325717324ACA00DDFF8E /* resttime_picker_item_bg@2x.png */,
 				64D1D44B16C54FDF00BE9C26 /* addrecord_menu_bg2@2x.png */,
 				64B0472D16B9223B009C936F /* background@2x.jpg */,
 				6466268E1720300700AC466C /* cycle_title_bg@2x.png */,
@@ -437,6 +440,7 @@
 				BEA0BCE81727691400E0D27D /* CycleCell.xib in Resources */,
 				BEA0BCEA1727702100E0D27D /* icon_tick@2x.png in Resources */,
 				BEA0BCEC1727D12F00E0D27D /* icon_tick_unselected@2x.png in Resources */,
+				BE26325817324ACA00DDFF8E /* resttime_picker_item_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

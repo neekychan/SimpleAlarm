@@ -16,8 +16,9 @@
     FMDatabase *db;
 }
 
-
+@property (retain,nonatomic) NSMutableArray *allAlarmRecords;
 
 + (SimpleAlarmDataBase *)shareSimpleAlarmDataBase;
+
 
 @end

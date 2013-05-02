@@ -40,16 +40,14 @@
     
     if(state == YES){
         
-        [self.iConImageView removeFromSuperview];
-        [self.titleLabel removeFromSuperview];
-        [self.contentLabel removeFromSuperview];
-        //[self.messageTextView removeFromSuperview];
-        [self.extendIconImageView removeFromSuperview];
-        
         [self.messageTextView setFrame:CGRectMake(6, 6, 280, 220)];
         [self.messageTextView setText:@"如:起床以后要做些什么?"];
         [self.messageTextView setTextColor:[UIColor grayColor]];
-        //[self.messageTextView setBackgroundColor:[UIColor blackColor]];
+        
+        [self.iConImageView removeFromSuperview];
+        [self.titleLabel removeFromSuperview];
+        [self.contentLabel removeFromSuperview];
+        [self.extendIconImageView removeFromSuperview];
         [self.messageTextView setHidden:NO];
    
         
@@ -62,8 +60,7 @@
     }
 }
 
-- (void)setDelegate:(id<UITextViewDelegate>)del{
-    _delegate = del;
+- (void)setDelegate:(id<UITextViewDelegate>)del {
     [self.messageTextView setDelegate:del];
 }
 

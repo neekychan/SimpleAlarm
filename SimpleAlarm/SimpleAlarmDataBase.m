@@ -10,6 +10,8 @@
 
 @implementation SimpleAlarmDataBase
 
+@synthesize allAlarmRecords;
+
 static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
 
 - (void)addAlarmClock:(AlarmRecord *)alarmRecord{//type,cycle,time,rest_time,message
@@ -33,20 +35,19 @@ static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
 - (NSMutableArray *)allAlarmRecords{
     
     FMResultSet *result = [db executeQuery:@"SELECT * FROM SIMPLEALARM"];
-    NSMutableArray *alarms = [[NSMutableArray alloc] initWithCapacity:20];
-    
+    allAlarmRecords = [[NSMutableArray alloc] initWithCapacity:20];
     while([result next]){
         
         AlarmRecord *record = [AlarmRecord alloc];
-        record.ID = [result intForColumn:@"id"];
-        record.type = [result intForColumn:@"type"];
-        record.cycle = [result stringForColumn:@"cycle"];
-        record.time = [result dateForColumn:@"time"];
+        record.ID       = [result intForColumn:@"id"];
+        record.type     = [result intForColumn:@"type"];
+        record.cycle    = [result stringForColumn:@"cycle"];
+        record.time     = [result dateForColumn:@"time"];
         record.restTime = [result intForColumn:@"rest_time"];
-        record.message = [result stringForColumn:@"message"];
+        record.message  = [result stringForColumn:@"message"];
         
         //NSValue *miValue = [NSValue valueWithBytes:&record objCType:@encode(AlarmRecord)]; // encode using the type name
-        [alarms addObject:record];
+        [allAlarmRecords addObject:record];
         [record release];
         
         NSLog(@"Type:%d,Cycle:%@,Time:%@,Rest_Time:%d,Message:%@",
@@ -58,8 +59,7 @@ static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
               );
 
     }
-    
-    return alarms;
+    return allAlarmRecords;
 }
 
 + (SimpleAlarmDataBase *)shareSimpleAlarmDataBase{
@@ -85,6 +85,7 @@ static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
 - (void)dealloc{
     [super dealloc];
     [db close];
+    [allAlarmRecords release];
     simpleAlarmDataBase = Nil;
 }
 
