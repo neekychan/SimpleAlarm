@@ -28,8 +28,8 @@ static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
 - (void)deleteAlarmClock:(int)itemID{
     
 }
-- (void)updateAlarmClock:(NSDictionary *)setting{
-    
+- (void)updateAlarmClock:(AlarmRecord *)alarmRecord{
+    [db executeUpdate:DB_SQL_ALARMCLOCKDAO_UPDATE_ITEM,[NSNumber numberWithInt:alarmRecord.type],alarmRecord.cycle,alarmRecord.time,[NSNumber numberWithInt:alarmRecord.restTime],alarmRecord.message,[NSNumber numberWithInt:alarmRecord.ID]];
 }
 
 - (NSMutableArray *)allAlarmRecords{

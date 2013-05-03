@@ -10,7 +10,7 @@
 
 -(void) addAlarmClock:(AlarmRecord *)alarmRecord;
 -(void) deleteAlarmClock:(int)itemID;
--(void) updateAlarmClock:(NSDictionary *)setting;
+-(void) updateAlarmClock:(AlarmRecord *)alarmRecord;
 - (NSMutableArray *)allAlarmRecords;
 
 @end

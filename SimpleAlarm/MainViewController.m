@@ -36,6 +36,9 @@
     [_alarmListView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//隐藏分割线
     [_alarmListView setShowsVerticalScrollIndicator:NO];
     self.alarmRecords = [db allAlarmRecords];
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(recordUpdateNotify:) name:@"recordUpdate" object:Nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,6 +73,7 @@
     record.restTime = 10;
     
     AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithAlarmRecord:record];
+//    AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithNibName:@"AddAlarmViewController" bundle:Nil];
     [self.navigationController pushViewController:addAlarmViewController animated:YES];
     [addAlarmViewController release];
     [dic release];
@@ -79,8 +83,8 @@
 
 - (IBAction)testBtn:(id)sender {
     
-    NSDate *date = [DateHelper dateWithYear:2013 month:4 day:23 hour:23 minute:11 second:0];
-
+    //NSDate *date = [DateHelper dateWithYear:2013 month:4 day:23 hour:23 minute:11 second:0];
+    NSDate *date = [NSDate date];
     NSDictionary *dic = [[NSDictionary alloc] initWithObjectsAndKeys:@"1",@"1",@"3",@"5",@"5",@"5", nil];
     
     NSMutableString *cycle = [[NSMutableString alloc] init];
@@ -109,6 +113,10 @@
     [self.alarmListView reloadData];
 }
 
+- (void)recordUpdateNotify:(NSNotification *)notification {
+    self.alarmRecords = [db allAlarmRecords];
+    [self.alarmListView reloadData];
+}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -134,9 +142,6 @@
     
     [cell initWithAlarmRecord:record];
     
-    //[cell.countdown setText:@"15小时15分后响铃"];
-    
-    
     return cell;
 }
 
@@ -148,6 +153,12 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return CELL_HEIGHT;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithAlarmRecord:[self.alarmRecords objectAtIndex:indexPath.row]];
+    [self.navigationController pushViewController:addAlarmViewController animated:YES];
+    [addAlarmViewController release];
 }
 
 - (void)dealloc {

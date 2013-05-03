@@ -30,6 +30,8 @@
     
     
     NSInteger days = [self intervalWithDates:[NSDate date] another:record.time];
+    NSDateComponents *dateComp = [DateHelper componentsWithDate:record.time];
+    [_time setText:[NSString stringWithFormat:@"%@:%@",[DateHelper decadeNumberFormat:dateComp.hour],[DateHelper decadeNumberFormat:dateComp.minute]]];
     [_day setText:[self dayTipByDays:days]];
     [_countdown setText:[self countDownTipByDates:[NSDate date] endDate:record.time]];
     

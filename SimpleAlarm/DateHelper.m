@@ -42,6 +42,13 @@
     return components;
 }
 
++ (NSDate *)dateWithComponenets:(NSDateComponents *)components {
+    NSCalendar *gregorian = [[NSCalendar alloc]
+                             initWithCalendarIdentifier:NSGregorianCalendar];
+    NSDate *date = [gregorian dateFromComponents:components];
+    return date;
+}
+
 + (NSString *)decadeNumberFormat:(int)number {    
     return number < 10 ? [NSString stringWithFormat:@"0%d",number] : [NSString stringWithFormat:@"%d",number];
 }

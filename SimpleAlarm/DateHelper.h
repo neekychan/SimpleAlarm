@@ -18,6 +18,7 @@
 + (NSDate *)dateUTCWithYear:(int)year month:(int)month day:(int)day hour:(int)hour minute:(int)minute second:(int)second;
 + (NSString *)stringFromDateWithFormatter:(NSDate *)date formatter:(NSDateFormatter *)formatter;
 + (NSDateComponents *)componentsWithDate:(NSDate *)date;
++ (NSDate *)dateWithComponenets:(NSDateComponents *)components;
 + (NSString *)decadeNumberFormat:(int)number;
 
 @end

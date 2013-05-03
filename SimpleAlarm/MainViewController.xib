@@ -44,7 +44,7 @@
 						<string key="NSFrameSize">{320, 460}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
+						<reference key="NSNextKeyView" ref="243848247"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -245,7 +245,7 @@
 				<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 			</object>
 			<object class="IBUIView" id="353750073">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="IBUIImageView" id="133843804">
@@ -253,13 +253,14 @@
 						<int key="NSvFlags">274</int>
 						<string key="NSFrame">{{15, 28}, {40, 40}}</string>
 						<reference key="NSSuperview" ref="353750073"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="13365148"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">h_mainboard_alarm_icon.png</string>
+							<string key="NSResourceName">mainboard_alarm_icon@2x.png</string>
 						</object>
 					</object>
 					<object class="IBUILabel" id="13365148">
@@ -267,6 +268,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{69, 28}, {61, 26}}</string>
 						<reference key="NSSuperview" ref="353750073"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="241037833"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -297,6 +299,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{69, 47}, {140, 21}}</string>
 						<reference key="NSSuperview" ref="353750073"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="668093264"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -327,6 +330,7 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{217, 37}, {55, 21}}</string>
 						<reference key="NSSuperview" ref="353750073"/>
+						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="627646535"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
@@ -358,16 +362,20 @@
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{7, 94}, {295, 1}}</string>
 						<reference key="NSSuperview" ref="353750073"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<object class="NSCustomResource" key="IBUIImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">h_seperate_line.png</string>
+							<string key="NSResourceName">seperate_line@2x.png</string>
 						</object>
 					</object>
 				</array>
 				<string key="NSFrameSize">{310, 95}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="133843804"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<reference key="IBUIBackgroundColor" ref="46916043"/>
@@ -615,12 +623,12 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="background@2x.jpg">{640, 960}</string>
-			<string key="h_mainboard_alarm_icon.png">{81, 81}</string>
-			<string key="h_seperate_line.png">{609, 1}</string>
 			<string key="itemboard@2x.png">{621, 991}</string>
+			<string key="mainboard_alarm_icon@2x.png">{81, 81}</string>
 			<string key="navi_button_forward_down@2x.png">{105, 64}</string>
 			<string key="navi_button_forward_up@2x.png">{105, 64}</string>
 			<string key="navigationbar@2x.png">{640, 87}</string>
+			<string key="seperate_line@2x.png">{609, 1}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>

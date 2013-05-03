@@ -9,6 +9,7 @@
 #import "AlarmRecord.h"
 
 @implementation AlarmRecord
+@synthesize ID;
 @synthesize type;
 @synthesize time;
 @synthesize cycle;

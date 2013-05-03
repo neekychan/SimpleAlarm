@@ -33,6 +33,26 @@ static NSString *CellIdentifier = @"cycleCell";
 {
     [super viewDidLoad];
     
+    
+    if (self.defaultSetting) {
+        
+        [daySelects removeAllObjects];
+        
+        NSArray *strArray = [self.defaultSetting componentsSeparatedByString:@","];
+        
+        //初始化当前周期选择下划线位置
+        if ([strArray containsObject:@"6"] && [strArray containsObject:@"7"] && strArray.count == 2) {
+            [self selectLineMove:2];
+        } else if(strArray.count == 5 && !([strArray containsObject:@"6"] && [strArray containsObject:@"7"])){
+            [self selectLineMove:1];
+        }
+
+        //初始化选中的周期
+        for (id value in strArray) {
+            [daySelects setObject:value forKey:value];
+        }
+    }
+    
     [self.navigationBar setTitle:@"选择周期"];
     [self.navigationBar addBackButton:@"返回" action:@selector(backButtonAction)];
     
@@ -55,7 +75,7 @@ static NSString *CellIdentifier = @"cycleCell";
 
 - (void)backButtonAction{
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc postNotificationName:@"cycleSelected" object:[daySelects retain]];
+    [nc postNotificationName:@"cycleSelected" object:daySelects];
     [self.navigationController popViewControllerAnimated:YES];
 }
 

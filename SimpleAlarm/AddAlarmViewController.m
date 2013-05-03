@@ -70,35 +70,49 @@ static NSString *CellIdentifier = @"settingCell";
     [_timePicker setDataSource:self];
     [_timePicker setDelegate:self];
     [_timePicker setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT, 320, 216)];
-    [_resttimePickerView setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT, 320, 150)];
+    [_resttimePickerView setFrame:CGRectMake(5, APPLICATION_VIEW_HEIGHT, 310, 150)];
+    
     //实现圆角和阴影效果
     _resttimePickerView.layer.cornerRadius = 6;
     _resttimePickerView.layer.shadowOffset= CGSizeMake(0, -2);
     _resttimePickerView.layer.shadowOpacity= .3;
     _resttimePickerView.layer.shadowRadius= 2.0;
-
+    
     if(setting) {
         
         [self.navigationBar setTitle:@"编辑闹钟"];
         [self.navigationBar addForwardButton:@"保存" action:@selector(saveBtnAction)];
         [self.navigationBar addBackButton:@"返回" action:@selector(returnBtnAction)];
-        
-        NSDateComponents *components = [DateHelper componentsWithDate:[setting time]];
-        NSInteger mins = [components minute];
-        NSInteger hour = [components hour];
-        //将时间选择器的刻度与当前时间保持一致
-        [_timePicker selectRow:hour inComponent:kSETTING_TIMEPICKER_COLUMN_HOUR animated:NO];
-        [_timePicker selectRow:mins inComponent:kSETTING_TIMEPICKER_COLUMN_MINUS animated:NO];
+        isMessageTextViewEmpty = NO;
         
     } else {
+        //当前为创建模式的情况下，新建一个默认的setting参数
+        AlarmRecord *defaultSetting = [[AlarmRecord alloc] init];
+        NSDate *defaultTime = [NSDate date];
+        NSDateComponents *com = [DateHelper componentsWithDate:[NSDate date]];
+        [com setHour:7];
+        [com setMinute:0];
+        defaultTime = [DateHelper dateWithComponenets:com];
+        defaultSetting.time = defaultTime;
+        defaultSetting.cycle = @"1,2,3,4,5";
+        defaultSetting.restTime = 10;
+        defaultSetting.type = 1;
+        [self setSetting:defaultSetting];
+        [defaultSetting release];
+        
         [self.navigationBar setTitle:@"添加闹钟"];
         [self.navigationBar addForwardButton:@"保存" action:@selector(saveBtnAction)];
         [self.navigationBar addBackButton:@"返回" action:@selector(returnBtnAction)];
-        [_timePicker selectRow:kSETTING_TIMEPICKER_DEFAULT_SELECT_HOUR inComponent:kSETTING_TIMEPICKER_COLUMN_HOUR animated:NO];
-        [_timePicker selectRow:kSETTING_TIMEPICKER_DEFAULT_SELECT_MINUS inComponent:kSETTING_TIMEPICKER_COLUMN_MINUS animated:NO];
     }
     
-
+    
+    
+    NSDateComponents *components = [DateHelper componentsWithDate:[setting time]];
+    NSInteger mins = [components minute];
+    NSInteger hour = [components hour];
+    //将时间选择器的刻度与当前时间保持一致
+    [_timePicker selectRow:hour inComponent:kSETTING_TIMEPICKER_COLUMN_HOUR animated:NO];
+    [_timePicker selectRow:mins inComponent:kSETTING_TIMEPICKER_COLUMN_MINUS animated:NO];
     
     [_settingTableView setDataSource:self];
     [_settingTableView setDelegate:self];
@@ -107,13 +121,13 @@ static NSString *CellIdentifier = @"settingCell";
     [_settingTableView setBackgroundView:backGroundImageView];
     [backGroundImageView release];
     
-
-
+    
+    
     UINib *nib = [UINib nibWithNibName:@"SettingViewCell" bundle:nil];
     [_settingTableView registerNib:nib forCellReuseIdentifier:CellIdentifier];
-
+    
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-    [nc addObserver:self selector:@selector(cycleSelected:) name:@"cycleSelected" object:Nil];
+    [nc addObserver:self selector:@selector(cycleSelectedNotify:) name:@"cycleSelected" object:Nil];
     
 }
 
@@ -133,6 +147,14 @@ static NSString *CellIdentifier = @"settingCell";
 }
 
 - (void)saveBtnAction {
+    
+    if(setting) {
+        [[SimpleAlarmDataBase shareSimpleAlarmDataBase] updateAlarmClock:setting];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"recordUpdate" object:Nil];
+    }
+     
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -144,7 +166,7 @@ static NSString *CellIdentifier = @"settingCell";
     if (isMessageTextViewEmpty) {
         textView.text = @"";
         textView.textColor = [UIColor blackColor];
-        isMessageTextViewEmpty = NO; 
+        isMessageTextViewEmpty = NO;
     }
     
     
@@ -164,7 +186,7 @@ static NSString *CellIdentifier = @"settingCell";
         isMessageTextViewEmpty = YES;
     }
     
-    alarmRecord.message = textView.text;
+    setting.message = textView.text;
     
     [self.settingTableView setScrollEnabled:YES];
     CGRect zoomRect = CGRectMake(0,0,320,460 + (iPhone5?88:0));
@@ -210,7 +232,7 @@ static NSString *CellIdentifier = @"settingCell";
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     if(indexPath.section == kSETTING_SECTION_MESSAGE){
-            return iPhone5 ? 220 + 88 : 220;
+        return iPhone5 ? 220 + 88 : 220;
     }
     
     return 44;
@@ -230,61 +252,40 @@ static NSString *CellIdentifier = @"settingCell";
 	
     switch (indexPath.section) {
         case kSETTING_SECTION_TIMER:
-        
-            cell.titleLabel.text = [settingTiles objectAtIndex:indexPath.row]; 
+            
+            cell.titleLabel.text = [settingTiles objectAtIndex:indexPath.row];
             UIImage *iconImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@",[settingIcons objectAtIndex:indexPath.row]]];
             cell.iConImageView.image = iconImage;
             
             switch (indexPath.row) {
                 case kSETTING_SECTION_TIMER_TIME:{
                     
-                    if (setting) {
-                        NSDateComponents *component = [DateHelper componentsWithDate:[setting time]];
-                        NSString *text = [NSString stringWithFormat:@"%@:%@",[DateHelper decadeNumberFormat:component.hour],[DateHelper decadeNumberFormat:component.minute]];
-                        cell.contentLabel.text = text;
-                    } else {
-                        cell.contentLabel.text = @"07:30";
-                    }
-
+                    NSDateComponents *component = [DateHelper componentsWithDate:[setting time]];
+                    NSString *text = [NSString stringWithFormat:@"%@:%@",[DateHelper decadeNumberFormat:component.hour],[DateHelper decadeNumberFormat:component.minute]];
+                    cell.contentLabel.text = text;
+                    
                 }
                     break;
                 case kSETTING_SECTION_TIMER_CYCLE:{
-                    
-                    NSString *title = @"工作日";
-                    
-                    if(setting) {
-                        title = @"自定义";
-                        NSString *cycle = setting.cycle;
-                        NSArray *cycles = [cycle componentsSeparatedByString:@","];
-                        if ([cycles containsObject:@"6"] && [cycles containsObject:@"7"] && cycles.count == 2) {
-                            title = @"周末";
-                        } else if(cycles.count == 5 && !([cycles containsObject:@"6"] && [cycles containsObject:@"7"])){
-                            title = @"工作日";
-                        }
-                    }
-                    cell.contentLabel.text = title;
+                    cell.contentLabel.text = [self cycleTitle:setting.cycle];
                     break;
                 }
                 case kSETTING_SECTION_TIMER_REST_TIME:{
-                    if(setting) {
-                        NSString *restTime = [NSString stringWithFormat:@"%d分钟",setting.restTime];
-                        cell.contentLabel.text = restTime;
-                    } else {
-                        cell.contentLabel.text = @"10分钟";
-                    }
-
+                    
+                    NSString *restTime = [NSString stringWithFormat:@"%d分钟",setting.restTime];
+                    cell.contentLabel.text = restTime;
                 }
+                    break;
                 default:
                     break;
             }
             
             break;
-        case kSETTING_SECTION_MESSAGE:{  
+        case kSETTING_SECTION_MESSAGE:{
             [cell setTextViewMode:YES];
             [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
             [cell setDelegate:self];
-            
-            if(setting) {
+            if (setting.message && !isMessageTextViewEmpty) {
                 cell.messageTextView.text = setting.message;
                 cell.messageTextView.textColor = [UIColor blackColor];
                 isMessageTextViewEmpty = NO;
@@ -294,7 +295,7 @@ static NSString *CellIdentifier = @"settingCell";
         default:
             break;
     }
-
+    
 	
 	return cell;
     
@@ -310,7 +311,7 @@ static NSString *CellIdentifier = @"settingCell";
             switch (indexPath.row) {
                     
                 case kSETTING_SECTION_TIMER_TIME:
-
+                    
                     if(self.timePicker.frame.origin.y == APPLICATION_VIEW_HEIGHT){
                         
                         [self.timePicker setHidden:NO];
@@ -333,44 +334,49 @@ static NSString *CellIdentifier = @"settingCell";
                         
                     }
                     break;
+                    
+                    
                 case kSETTING_SECTION_TIMER_CYCLE:{
                     
                     CycleSettingViewController *cycleSettingView = [[CycleSettingViewController alloc] initWithNibName:@"CycleSettingViewController" bundle:Nil];
+                    [cycleSettingView setDefaultSetting:setting.cycle];
                     [self.navigationController pushViewController:cycleSettingView animated:YES];
                     [self.settingTableView deselectRowAtIndexPath:indexPath animated:YES];
-                    [cycleSettingView release];                    
+                    [cycleSettingView release];
                 }
                     break;
+                    
+                    
                 case kSETTING_SECTION_TIMER_REST_TIME:{
                     if([self.resttimePickerView frame].origin.y != (APPLICATION_VIEW_HEIGHT - 150)) {
                         [UIView beginAnimations:@"showRestTimePicker" context:nil];
                         [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
                         [UIView setAnimationDuration:.3];
                         [UIView setAnimationDelegate:self];
-                        [self.resttimePickerView setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT - 150, 320, 150)];
+                        [self.resttimePickerView setFrame:CGRectMake(5, APPLICATION_VIEW_HEIGHT - 150, 310, 150)];
                         [UIView commitAnimations];
                     } else {
                         [UIView beginAnimations:@"hideRestTimePicker" context:nil];
                         [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
                         [UIView setAnimationDuration:.3];
                         [UIView setAnimationDelegate:self];
-                        [self.resttimePickerView setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT, 320, 150)];
+                        [self.resttimePickerView setFrame:CGRectMake(5, APPLICATION_VIEW_HEIGHT, 310, 150)];
                         [UIView commitAnimations];
                     }
-        
+                    
                 }
                     break;
                 default:
                     break;
             }
-
+            
             break;
-         case kSETTING_SECTION_MESSAGE:
+        case kSETTING_SECTION_MESSAGE:
             break;
         default:
             break;
     }
-    }
+}
 
 #pragma mark -timepicker datasource
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
@@ -414,16 +420,16 @@ static NSString *CellIdentifier = @"settingCell";
     }
     
     return [NSString stringWithFormat:@" %d",row];
-
+    
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component{
-
+    
     NSInteger hour = [_timePicker selectedRowInComponent:kSETTING_TIMEPICKER_COLUMN_HOUR] % kSETTING_TIMEPICKER_COLUMN_HOUR_COUNT;
     NSInteger minus = [_timePicker selectedRowInComponent:kSETTING_TIMEPICKER_COLUMN_MINUS] % kSETTING_TIMEPICKER_COLUMN_MINUS_COUNT;
     NSString *strHour = [NSString stringWithFormat:@"%d",hour];
     NSString *strMinus = [NSString stringWithFormat:@"%d",minus];
-
+    
     if(currentCell != Nil){
         if(hour < 10){
             strHour = [NSString stringWithFormat:@"0%d",hour];
@@ -431,55 +437,74 @@ static NSString *CellIdentifier = @"settingCell";
         if(minus < 10){
             strMinus = [NSString stringWithFormat:@"0%d",minus];
         }
-        [currentCell.contentLabel setText:[NSString stringWithFormat:@"%@:%@",strHour,strMinus]];
+        //[currentCell.contentLabel setText:[NSString stringWithFormat:@"%@:%@",strHour,strMinus]];
     }
+    NSDateComponents *comp = [DateHelper componentsWithDate:setting.time];
+    [comp setHour:hour];
+    [comp setMinute:minus];
+    setting.time = [DateHelper dateWithComponenets:comp];
+    [_settingTableView reloadData];
     
-    alarmRecord.time = [DateHelper dateWithYear:0 month:0 day:0 hour:hour minute:minus second:0];
-
 }
 
--(void) cycleSelected:(NSMutableDictionary *)dics{
+-(void) cycleSelectedNotify:(NSNotification *)notification{
     
     NSMutableString *cycle = [[NSMutableString alloc] init];
-    for(id key in dics.allKeys) {
-        NSString *value = [dics objectForKey:key];
+    NSDictionary *tmpDics = notification.object;
+    for(id key in tmpDics.allKeys) {
+        NSString *value = [tmpDics objectForKey:key];
         [cycle appendFormat:@"%@,",value];
     }
     //删除结尾的逗号
     [cycle deleteCharactersInRange:NSMakeRange(cycle.length - 1,1)];
-    alarmRecord.cycle = cycle;
+    
+    setting.cycle = cycle;
+    
+    [_settingTableView reloadData];
+}
+
+-(NSString *) cycleTitle:(NSString *)str {
+    NSString *title = @"工作日";
+    NSArray *cycles = [str componentsSeparatedByString:@","];
+    if ([cycles containsObject:@"6"] && [cycles containsObject:@"7"] && cycles.count == 2) {
+        title = @"周末";
+    } else if(cycles.count == 5 && !([cycles containsObject:@"6"] && [cycles containsObject:@"7"])){
+        title = @"工作日";
+    }
+    return title;
 }
 
 #pragma mark -UIButton Action
 
 - (IBAction)fiveMinsBtnAction:(id)sender {
-    alarmRecord.restTime = 5;
+    setting.restTime = 5;
     [self restoreView];
 }
 
 - (IBAction)fifteenMinsBtnAction:(id)sender {
-    alarmRecord.restTime = 15;
+    setting.restTime = 15;
     [self restoreView];
 }
 
 - (IBAction)twentyMinsBtnAction:(id)sender {
-    alarmRecord.restTime = 20;
+    setting.restTime = 20;
     [self restoreView];
 }
 
 //隐藏键盘
 - (void)hideKeyBoard:(id)sender{
-
+    
     UITextView *textView = (UITextView *)sender;
     if(textView != Nil){
         [textView resignFirstResponder];
     }
-     
+    
 }
 
 
 /*重置窗口，取消已显示选项。*/
 - (void)restoreView{
+    [self.settingTableView reloadData];
     [UIView beginAnimations:@"HideTimePicker" context:nil];
     [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
     [UIView setAnimationDuration:.3];
@@ -492,7 +517,7 @@ static NSString *CellIdentifier = @"settingCell";
     [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
     [UIView setAnimationDuration:.3];
     [UIView setAnimationDelegate:self];
-    [self.resttimePickerView setFrame:CGRectMake(0, APPLICATION_VIEW_HEIGHT, 320, 150)];
+    [self.resttimePickerView setFrame:CGRectMake(5, APPLICATION_VIEW_HEIGHT, 310, 150)];
     [UIView commitAnimations];
 }
 

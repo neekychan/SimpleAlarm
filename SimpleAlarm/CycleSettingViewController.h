@@ -20,8 +20,10 @@
 - (IBAction)workDayBtnAction:(id)sender;
 - (IBAction)weekendBtnAction:(id)sender;
 - (IBAction)customBtnAction:(id)sender;
-@property (retain, nonatomic) IBOutlet UIImageView *selectLineImageView;
 
+@property (retain, nonatomic) IBOutlet UIImageView *selectLineImageView;
 @property (retain, nonatomic) IBOutlet UITableView *cycleTableView;
+
+@property (retain, nonatomic) NSString *defaultSetting;
 
 @end

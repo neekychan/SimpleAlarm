@@ -24,6 +24,7 @@
 #define DB_NAME @"SIMPLEALARM"
 #define DB_SQL_CREATE_TABLE @"CREATE TABLE SIMPLEALARM (id INTEGER PRIMARY KEY AUTOINCREMENT,type INT NOT NULL ,cycle VARCHAR(45) NOT NULL ,time DATETIME NOT NULL ,rest_time INT NULL ,message VARCHAR(200) NULL)"
 #define DB_SQL_ALARMCLOCKDAO_ADD_ITEM @"INSERT INTO SIMPLEALARM (type,cycle,time,rest_time,message) VALUES(%d,%@,%d,%d,%@);"
+#define DB_SQL_ALARMCLOCKDAO_UPDATE_ITEM @"UPDATE SIMPLEALARM SET type = ?,cycle = ?,time = ?,rest_time = ?,message = ? WHERE id = ?"
 
 //闹钟Setting键
 #define DB_RECORD_SETTING_TYPE @"db_record_setting_type"
