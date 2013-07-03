@@ -71,7 +71,7 @@ static NSString *CellIdentifier = @"cycleCell";
 
 }
 
-#pragma mark -navigationbar delegate
+#pragma mark - navigationbar delegate
 
 - (void)backButtonAction{
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -79,7 +79,7 @@ static NSString *CellIdentifier = @"cycleCell";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-#pragma mark -tableview delegate
+#pragma mark - tableview delegate
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -111,6 +111,14 @@ static NSString *CellIdentifier = @"cycleCell";
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    //周期至少有一个。强制不能取消最后一个选项。
+    if ([daySelects count] == 1) {
+       
+        NSNumber *tmpInt = [daySelects objectForKey:[NSString stringWithFormat:@"%d",indexPath.row + 1]];
+        if( (indexPath.row + 1) == [tmpInt intValue])
+         return;
+    }
+    
     CycleCell *cell = (CycleCell *)[self tableView:tableView cellForRowAtIndexPath:indexPath];
     NSString *key = [NSString stringWithFormat:@"%d",indexPath.row + 1];
     
@@ -121,6 +129,7 @@ static NSString *CellIdentifier = @"cycleCell";
         [cell setTick:NO];
         [daySelects removeObjectForKey:key];
     }
+    
     
     [self selectLineMove:3];
 

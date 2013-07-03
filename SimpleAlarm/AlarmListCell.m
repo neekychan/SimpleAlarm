@@ -28,13 +28,17 @@
 
 - (void)initWithAlarmRecord:(AlarmRecord *)record{
     
+    self.record = record;
     
-    NSInteger days = [self intervalWithDates:[NSDate date] another:record.time];
+    //新的显示逻辑
     NSDateComponents *dateComp = [DateHelper componentsWithDate:record.time];
     [_time setText:[NSString stringWithFormat:@"%@:%@",[DateHelper decadeNumberFormat:dateComp.hour],[DateHelper decadeNumberFormat:dateComp.minute]]];
-    [_day setText:[self dayTipByDays:days]];
-    [_countdown setText:[self countDownTipByDates:[NSDate date] endDate:record.time]];
     
+    NSInteger week = [[DateHelper componentsWithDate:[NSDate date]] weekday];
+    NSInteger interval = [self intervalWithWeeks:week cycleWeek:record.cycle];
+
+    _day.text = record.status == YES ? [self formatIntervalOfWeeks:interval]:@"暂停";
+    [_countdown setText:[self countDownTipWithDate:record.time afterDays:interval]];
 }
 
 - (BOOL)isToday:(NSDate *)date{
@@ -46,6 +50,80 @@
     }
     
     return NO;
+}
+
+
+- (NSString *)formatIntervalOfWeeks:(NSInteger)interval {
+    if (interval == 0)
+        return @"今天";
+    
+    if(interval == -1)
+        return @"过期";
+    
+    if (interval == 1) {
+        return @"明天";
+    }
+    
+    if(interval == 2)
+        return @"后天";
+    
+    if(interval == 7)
+        return @"下周";
+    
+    return [NSString stringWithFormat:@"%d天后",interval];
+}
+
+- (NSInteger)intervalWithWeeks:(NSInteger)dateWeek cycleWeek:(NSString *)cycle {
+    
+    dateWeek = dateWeek == 7 ? 1 :dateWeek - 1;
+    
+    NSArray *cycleWeek = [cycle componentsSeparatedByString:@","];
+    
+    if([cycleWeek count] == 0)
+        return -1;
+  
+    //将周期里最先也最迟的日期取出来
+
+    NSInteger theSmallOne = [(NSString *)[cycleWeek objectAtIndex:0] intValue];
+    NSInteger theBigOne = [(NSString *)[cycleWeek lastObject] intValue];
+    
+    
+    
+    
+
+    for(int i = 0;i < [cycleWeek count];i++) {
+        
+        NSInteger week = [(NSString *)[cycleWeek objectAtIndex:i] intValue];
+        
+        if(dateWeek > theBigOne) {
+            return 7 - dateWeek + theSmallOne;
+        }
+        
+        //当同一天的情况时
+        if (dateWeek == week) {
+            
+            NSDateComponents *recordComps = [DateHelper componentsWithDate:self.record.time];
+            NSDateComponents *newComps = [DateHelper componentsWithDate:[NSDate date]];
+            
+            [newComps setHour:recordComps.hour];
+            [newComps setMinute:recordComps.minute];
+            [newComps setSecond:recordComps.second];
+            
+            NSDate *newDate = [DateHelper dateWithComponenets:newComps];
+            
+            if([newDate compare:[NSDate date]] == NSOrderedAscending)
+                continue;
+            
+            return 0;
+        }
+        
+        //当比当前日期细时
+        if(dateWeek < week) {
+            return week - dateWeek;
+        }            
+    }
+    
+    return -1;
 }
 
 - (NSInteger)intervalWithDates:(NSDate *)date another:(NSDate *)another{
@@ -115,7 +193,7 @@
     
     if(hours == 0){
         tip = [[NSString alloc] initWithFormat:@"%d分后响铃",mins];
-    } else if(hours < 12){
+    } else if(hours < 10){
         tip = [[NSString alloc] initWithFormat:@"0%d时%d分后响铃",hours,mins];
     } else {
         tip = [[NSString alloc] initWithFormat:@"%d时%d分后响铃",hours,mins];
@@ -123,6 +201,20 @@
     
     
     return [tip autorelease];
+}
+
+- (NSString *)countDownTipWithDate:(NSDate *)date afterDays:(NSInteger)days {
+    
+    NSDateComponents *recordComps = [DateHelper componentsWithDate:date];
+    NSDateComponents *newComps = [DateHelper componentsWithDate:[NSDate dateWithTimeIntervalSinceNow:(days * 24 * 3600)]];
+    
+    [newComps setHour:recordComps.hour];
+    [newComps setMinute:recordComps.minute];
+    [newComps setSecond:recordComps.second];
+    
+    NSDate *newDate = [DateHelper dateWithComponenets:newComps];
+    
+    return [self countDownTipByDates:[NSDate date] endDate:newDate];
 }
 
 - (void)dealloc {

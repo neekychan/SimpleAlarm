@@ -37,7 +37,7 @@
 }
 
 + (NSDateComponents *)componentsWithDate:(NSDate *)date {
-    NSInteger flag = NSSecondCalendarUnit | NSMinuteCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+    NSInteger flag = NSSecondCalendarUnit | NSMinuteCalendarUnit | NSHourCalendarUnit | NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit | NSWeekdayCalendarUnit;
     NSDateComponents *components = [[NSCalendar currentCalendar] components:flag fromDate:date];
     return components;
 }
@@ -46,6 +46,7 @@
     NSCalendar *gregorian = [[NSCalendar alloc]
                              initWithCalendarIdentifier:NSGregorianCalendar];
     NSDate *date = [gregorian dateFromComponents:components];
+    [gregorian release];
     return date;
 }
 

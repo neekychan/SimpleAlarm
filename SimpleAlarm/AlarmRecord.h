@@ -7,13 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#define kAlarmRecordTypeWakeup  0
+#define kAlarmRecordTypeAlarm   1
+
+#define kAlarmRecordRingTypeDefault 0
+
+
 
 @interface AlarmRecord : NSObject
 @property int ID;
 @property int type;
-@property (copy,nonatomic) NSString *cycle;
+@property (retain,nonatomic) NSString *cycle;
 @property (nonatomic,retain) NSDate *time;
 @property int restTime;
 @property (copy,nonatomic) NSString *message;
+@property int ringType;
+@property BOOL status;
+@property (retain, nonatomic) NSData *image;
 
 @end

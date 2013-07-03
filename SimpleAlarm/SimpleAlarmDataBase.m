@@ -16,53 +16,66 @@ static SimpleAlarmDataBase *simpleAlarmDataBase = Nil;
 
 - (void)addAlarmClock:(AlarmRecord *)alarmRecord{//type,cycle,time,rest_time,message
     
-    [db executeUpdate:@"INSERT INTO SIMPLEALARM (type,cycle,time,rest_time,message) VALUES(?,?,?,?,?)",[NSNumber numberWithInt:alarmRecord.type],alarmRecord.cycle,alarmRecord.time,[NSNumber numberWithInt:alarmRecord.restTime],alarmRecord.message];
-    FMResultSet *result = [db executeQuery:@"SELECT * FROM SIMPLEALARM"];
+    [db executeUpdate:DB_SQL_ALARMCLOCKDAO_ADD_ITEM,[NSNumber numberWithInt:alarmRecord.type],alarmRecord.cycle,alarmRecord.time,[NSNumber numberWithInt:alarmRecord.restTime],alarmRecord.message,[NSNumber numberWithInt:alarmRecord.ringType],[NSNumber numberWithBool:alarmRecord.status],alarmRecord.image];
+    FMResultSet *result = [db executeQuery:DB_SQL_ALARMCLOCKDAO_SELECT_ALL];
     while([result next]){
-        NSLog(@"Type:%d,Cycle:%@,Time:%@,Rest_Time:%d,Message:%@",[result intForColumn:@"type"],[result stringForColumn:@"cycle"],[[result dateForColumn:@"time"] description],[result intForColumn:@"rest_time"],[result stringForColumn:@"message"]);
+        NSLog(@"Type:%d,Cycle:%@,Time:%@,Rest_Time:%d,Message:%@,ringType:%d,status:%c",
+              [result intForColumn:@"type"],
+              [result stringForColumn:@"cycle"],
+              [[result dateForColumn:@"time"] description],
+              [result intForColumn:@"rest_time"],
+              [result stringForColumn:@"message"],
+              [result intForColumn:@"ring"],
+              [result boolForColumn:@"status"]
+              );
     }
     
     [result close];
 
 }
+
 - (void)deleteAlarmClock:(int)itemID{
+    [db executeUpdate:DB_SQL_ALARMCLOCKDAO_DELETE_ITEM,[NSNumber numberWithInt:itemID]];
     
 }
+
 - (void)updateAlarmClock:(AlarmRecord *)alarmRecord{
-    [db executeUpdate:DB_SQL_ALARMCLOCKDAO_UPDATE_ITEM,[NSNumber numberWithInt:alarmRecord.type],alarmRecord.cycle,alarmRecord.time,[NSNumber numberWithInt:alarmRecord.restTime],alarmRecord.message,[NSNumber numberWithInt:alarmRecord.ID]];
+    [db executeUpdate:DB_SQL_ALARMCLOCKDAO_UPDATE_ITEM,[NSNumber numberWithInt:alarmRecord.type],alarmRecord.cycle,alarmRecord.time,[NSNumber numberWithInt:alarmRecord.restTime],alarmRecord.message,[NSNumber numberWithInt:alarmRecord.ringType],[NSNumber numberWithBool:alarmRecord.status],alarmRecord.image,[NSNumber numberWithInt:alarmRecord.ID]];
 }
 
 - (NSMutableArray *)allAlarmRecords{
     
-    FMResultSet *result = [db executeQuery:@"SELECT * FROM SIMPLEALARM"];
+    FMResultSet *result = [db executeQuery:DB_SQL_ALARMCLOCKDAO_SELECT_ALL];
     allAlarmRecords = [[NSMutableArray alloc] initWithCapacity:20];
     while([result next]){
         
-        AlarmRecord *record = [AlarmRecord alloc];
-        record.ID       = [result intForColumn:@"id"];
-        record.type     = [result intForColumn:@"type"];
-        record.cycle    = [result stringForColumn:@"cycle"];
-        record.time     = [result dateForColumn:@"time"];
-        record.restTime = [result intForColumn:@"rest_time"];
-        record.message  = [result stringForColumn:@"message"];
+        AlarmRecord *record = [self convertResultToAlarmRecord:result];
         
         //NSValue *miValue = [NSValue valueWithBytes:&record objCType:@encode(AlarmRecord)]; // encode using the type name
         [allAlarmRecords addObject:record];
-        [record release];
         
-        NSLog(@"Type:%d,Cycle:%@,Time:%@,Rest_Time:%d,Message:%@",
-              [result intForColumn:@"type"],
-              [result stringForColumn:@"cycle"],
-              [[result dateForColumn:@"time"] description],
-              [result intForColumn:@"rest_time"],
-              [result stringForColumn:@"message"]
-              );
+        NSLog(@"%@",[record description]);
 
     }
     return allAlarmRecords;
 }
 
-+ (SimpleAlarmDataBase *)shareSimpleAlarmDataBase{
+- (AlarmRecord *)convertResultToAlarmRecord:(FMResultSet *)result {
+    
+    AlarmRecord *record = [[[AlarmRecord alloc] init] autorelease];
+    record.ID       = [result intForColumn:@"id"];
+    record.type     = [result intForColumn:@"type"];
+    record.cycle    = [result stringForColumn:@"cycle"];
+    record.time     = [result dateForColumn:@"time"];
+    record.restTime = [result intForColumn:@"rest_time"];
+    record.message  = [result stringForColumn:@"message"];
+    record.ringType = [result intForColumn:@"ring"];
+    record.status   = [result boolForColumn:@"status"];
+    record.image    = [result dataForColumn:@"image"];
+    return record;
+}
+
++ (SimpleAlarmDataBase *)shareDataBase{
     @synchronized(self){
         if(simpleAlarmDataBase == Nil){
             simpleAlarmDataBase = [[SimpleAlarmDataBase alloc] init];

@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 #import "statics.h"
-@interface AlarmListCell : UITableViewCell
+@interface AlarmListCell : UITableViewCell {
+}
 @property (retain, nonatomic) IBOutlet UIImageView *icon;
 @property (retain, nonatomic) IBOutlet UILabel *time;
 @property (retain, nonatomic) IBOutlet UILabel *countdown;
 @property (retain, nonatomic) IBOutlet UILabel *day;
+@property (retain, nonatomic) AlarmRecord *record;
 
 - (void) initWithAlarmRecord:(AlarmRecord *)record;
 

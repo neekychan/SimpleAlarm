@@ -18,7 +18,7 @@
 
 @property (retain,nonatomic) NSMutableArray *allAlarmRecords;
 
-+ (SimpleAlarmDataBase *)shareSimpleAlarmDataBase;
++ (SimpleAlarmDataBase *)shareDataBase;
 
 
 @end

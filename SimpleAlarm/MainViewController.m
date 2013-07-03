@@ -27,10 +27,37 @@
 {
     [super viewDidLoad];
     
+    NSArray *array = [[NSBundle mainBundle]loadNibNamed:@"SimpleMenuView" owner:self options:nil];
+    testMenu = [array objectAtIndex:0];
+    [testMenu setTitleArray:[NSArray arrayWithObjects:@"1",@"2",@"3",@"3",@"3",@"3",Nil]];
+    //实现圆角和阴影效果
+    testMenu.layer.cornerRadius = 3 ;
+    testMenu.layer.shadowOffset= CGSizeMake( 0, -2);
+    testMenu.layer.shadowOpacity= .3;
+    testMenu.layer.shadowRadius= 1.5;
+    
+    testMenu.delegate = self;
+    
     [self.navigationBar setTitle:@"简单闹钟"];
     [self.navigationBar addForwardButton:@"添加" action:@selector(addAlarmAction)];
     
-    db = [[SimpleAlarmDataBase shareSimpleAlarmDataBase] retain];
+    
+    //[self.view insertSubview:detailView aboveSubview:_alarmListItemView];
+    NSArray *ar = [[NSBundle mainBundle]loadNibNamed:@"AlarmDetailView" owner:self options:nil];
+    detailView = [ar objectAtIndex:0];
+    [detailView setFrame:CGRectMake(0,-194, 320, 194)];
+
+   
+    alarmDetailViewbackground = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 640)];
+    alarmDetailViewbackground.backgroundColor = [UIColor blackColor];
+    [alarmDetailViewbackground setAlpha:0];
+    [alarmDetailViewbackground addTarget:self action:@selector(hideAlarmDetailView) forControlEvents:UIControlEventTouchDown];
+    
+    
+    [self.view addSubview:alarmDetailViewbackground];
+    [self.view addSubview:detailView];
+    
+    db = [[SimpleAlarmDataBase shareDataBase] retain];
     [_alarmListView setDelegate:self];
     [_alarmListView setDataSource:self];
     [_alarmListView setSeparatorStyle:UITableViewCellSeparatorStyleNone];//隐藏分割线
@@ -39,6 +66,8 @@
     
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     [center addObserver:self selector:@selector(recordUpdateNotify:) name:@"recordUpdate" object:Nil];
+    
+    [self.view addSubview:testMenu];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,9 +77,8 @@
 
 
 
+
 - (void)addAlarmAction {
-    //[db addAlarmClock:Nil];
-    //AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithNibName:@"AddAlarmViewController" bundle:Nil];
     
     NSDate *date = [DateHelper dateWithYear:2013 month:4 day:23 hour:23 minute:11 second:0];
     
@@ -72,8 +100,8 @@
     record.message = @"No Message";
     record.restTime = 10;
     
-    AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithAlarmRecord:record];
-//    AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithNibName:@"AddAlarmViewController" bundle:Nil];
+//    AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithAlarmRecord:record];
+    AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithNibName:@"AddAlarmViewController" bundle:Nil];
     [self.navigationController pushViewController:addAlarmViewController animated:YES];
     [addAlarmViewController release];
     [dic release];
@@ -113,11 +141,14 @@
     [self.alarmListView reloadData];
 }
 
+#pragma mark -notification delegate
 - (void)recordUpdateNotify:(NSNotification *)notification {
     self.alarmRecords = [db allAlarmRecords];
     [self.alarmListView reloadData];
 }
 
+
+#pragma mark -tableview delegate
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     
@@ -146,6 +177,25 @@
 }
 
 
+//可编辑与删除实现
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    if(editingStyle == UITableViewCellEditingStyleDelete) {
+        
+        AlarmRecord *record = [self.alarmRecords objectAtIndex:indexPath.row];        
+        [[SimpleAlarmDataBase shareDataBase] deleteAlarmClock:record.ID];
+        
+        [self.alarmRecords removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
+    
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSLog(@"将要显示%d条记录",[self.alarmRecords count]);
     return [self.alarmRecords count];
@@ -159,6 +209,30 @@
     AddAlarmViewController *addAlarmViewController = [[AddAlarmViewController alloc] initWithAlarmRecord:[self.alarmRecords objectAtIndex:indexPath.row]];
     [self.navigationController pushViewController:addAlarmViewController animated:YES];
     [addAlarmViewController release];
+    
+//    [detailView setAlarmRecord:[self.alarmRecords objectAtIndex:indexPath.row]];
+//    [alarmDetailViewbackground setEnabled:YES];
+//    [UIView beginAnimations:@"showAlarmDetailView" context:nil];
+//    [UIView setAnimationCurve:UIViewAnimationCurveEaseIn];
+//    [UIView setAnimationDuration:0.3];
+//    [UIView setAnimationDelegate:self];
+//    [detailView setFrame:CGRectMake(0, 0, 320, 194)];
+//    [alarmDetailViewbackground setAlpha:0.5];
+//    [UIView commitAnimations];
+    
+}
+
+
+- (void)hideAlarmDetailView {
+    [UIView beginAnimations:@"hideAlarmDetailView" context:nil];
+    [UIView setAnimationCurve:UIViewAnimationCurveEaseOut];
+    [UIView setAnimationDuration:0.3];
+    [UIView setAnimationDelegate:self];
+    [detailView setFrame:CGRectMake(0, -194, 320, 194)];
+    [alarmDetailViewbackground setAlpha:0];
+    [alarmDetailViewbackground setEnabled:NO];
+    [UIView commitAnimations];
+
 }
 
 - (void)dealloc {

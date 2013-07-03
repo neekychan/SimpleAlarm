@@ -56,7 +56,18 @@
 		64E9A55116EF8091005D5CB0 /* DefaultNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 64E9A55016EF8091005D5CB0 /* DefaultNavigationBar.m */; };
 		64F23A1916C7DD5C009257A0 /* SettingViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F23A1816C7DD5C009257A0 /* SettingViewCell.m */; };
 		64F23A1C16C7E2A8009257A0 /* SettingViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 64F23A1B16C7E2A8009257A0 /* SettingViewCell.xib */; };
-		BE26325817324ACA00DDFF8E /* resttime_picker_item_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE26325717324ACA00DDFF8E /* resttime_picker_item_bg@2x.png */; };
+		BE26325817324ACA00DDFF8E /* simplemenu_item_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE26325717324ACA00DDFF8E /* simplemenu_item_bg@2x.png */; };
+		BE526B22173C85540048F608 /* icon_alarm_type@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE526B1F173C85540048F608 /* icon_alarm_type@2x.png */; };
+		BE526B23173C85540048F608 /* icon_picture@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE526B20173C85540048F608 /* icon_picture@2x.png */; };
+		BE526B24173C85540048F608 /* icon_status@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE526B21173C85540048F608 /* icon_status@2x.png */; };
+		BE883B5517377A4400EBA827 /* icon_clock_large@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BE883B5417377A4400EBA827 /* icon_clock_large@2x.png */; };
+		BE883B571737817900EBA827 /* AlarmDetailView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE883B561737817900EBA827 /* AlarmDetailView.xib */; };
+		BE883B5A173781AD00EBA827 /* AlarmDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE883B59173781AC00EBA827 /* AlarmDetailView.m */; };
+		BE883B5C1737927000EBA827 /* alarm_detail_background.png in Resources */ = {isa = PBXBuildFile; fileRef = BE883B5B1737927000EBA827 /* alarm_detail_background.png */; };
+		BE883B5F173A296400EBA827 /* SimpleMenuView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE883B5E173A296400EBA827 /* SimpleMenuView.xib */; };
+		BE883B62173A29F500EBA827 /* SimpleMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE883B61173A29F500EBA827 /* SimpleMenuView.m */; };
+		BE883B65173A2C8D00EBA827 /* SimpleMenuCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BE883B64173A2C8D00EBA827 /* SimpleMenuCell.m */; };
+		BE883B67173A2CC100EBA827 /* SimpleMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE883B66173A2CC000EBA827 /* SimpleMenuCell.xib */; };
 		BEA0BCE6172768AE00E0D27D /* CycleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BEA0BCE5172768AE00E0D27D /* CycleCell.m */; };
 		BEA0BCE81727691400E0D27D /* CycleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = BEA0BCE71727691400E0D27D /* CycleCell.xib */; };
 		BEA0BCEA1727702100E0D27D /* icon_tick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BEA0BCE91727702100E0D27D /* icon_tick@2x.png */; };
@@ -141,7 +152,21 @@
 		BE14005E172B7E5E009BB954 /* SettingViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SettingViewCell.xib; path = "Resources-iPad/SimpleAlarm/SettingViewCell.xib"; sourceTree = "<group>"; };
 		BE14005F172B7E5E009BB954 /* CycleSettingViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CycleSettingViewController.xib; path = "Resources-iPad/SimpleAlarm/CycleSettingViewController.xib"; sourceTree = "<group>"; };
 		BE140060172B7E5E009BB954 /* CycleCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = CycleCell.xib; path = "Resources-iPad/SimpleAlarm/CycleCell.xib"; sourceTree = "<group>"; };
-		BE26325717324ACA00DDFF8E /* resttime_picker_item_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "resttime_picker_item_bg@2x.png"; sourceTree = "<group>"; };
+		BE26325717324ACA00DDFF8E /* simplemenu_item_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "simplemenu_item_bg@2x.png"; sourceTree = "<group>"; };
+		BE526B1F173C85540048F608 /* icon_alarm_type@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_alarm_type@2x.png"; sourceTree = "<group>"; };
+		BE526B20173C85540048F608 /* icon_picture@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_picture@2x.png"; sourceTree = "<group>"; };
+		BE526B21173C85540048F608 /* icon_status@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_status@2x.png"; sourceTree = "<group>"; };
+		BE883B5417377A4400EBA827 /* icon_clock_large@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_clock_large@2x.png"; sourceTree = "<group>"; };
+		BE883B561737817900EBA827 /* AlarmDetailView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AlarmDetailView.xib; sourceTree = "<group>"; };
+		BE883B58173781AC00EBA827 /* AlarmDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AlarmDetailView.h; sourceTree = "<group>"; };
+		BE883B59173781AC00EBA827 /* AlarmDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AlarmDetailView.m; sourceTree = "<group>"; };
+		BE883B5B1737927000EBA827 /* alarm_detail_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = alarm_detail_background.png; sourceTree = "<group>"; };
+		BE883B5E173A296400EBA827 /* SimpleMenuView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleMenuView.xib; sourceTree = "<group>"; };
+		BE883B60173A29F500EBA827 /* SimpleMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMenuView.h; sourceTree = "<group>"; };
+		BE883B61173A29F500EBA827 /* SimpleMenuView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMenuView.m; sourceTree = "<group>"; };
+		BE883B63173A2C8D00EBA827 /* SimpleMenuCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleMenuCell.h; sourceTree = "<group>"; };
+		BE883B64173A2C8D00EBA827 /* SimpleMenuCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleMenuCell.m; sourceTree = "<group>"; };
+		BE883B66173A2CC000EBA827 /* SimpleMenuCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SimpleMenuCell.xib; sourceTree = "<group>"; };
 		BEA0BCE4172768AE00E0D27D /* CycleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CycleCell.h; sourceTree = "<group>"; };
 		BEA0BCE5172768AE00E0D27D /* CycleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CycleCell.m; sourceTree = "<group>"; };
 		BEA0BCE71727691400E0D27D /* CycleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CycleCell.xib; sourceTree = "<group>"; };
@@ -176,6 +201,9 @@
 				64B0472916B921E8009C936F /* MainViewController.xib */,
 				64E9A54F16EF8091005D5CB0 /* DefaultNavigationBar.h */,
 				64E9A55016EF8091005D5CB0 /* DefaultNavigationBar.m */,
+				BE883B58173781AC00EBA827 /* AlarmDetailView.h */,
+				BE883B59173781AC00EBA827 /* AlarmDetailView.m */,
+				BE883B561737817900EBA827 /* AlarmDetailView.xib */,
 			);
 			name = MainView;
 			sourceTree = "<group>";
@@ -221,6 +249,7 @@
 				649634ED1715A87B005C118D /* BaseViewController.h */,
 				649634EE1715A87B005C118D /* BaseViewController.m */,
 				64B0471116B9217E009C936F /* Supporting Files */,
+				BE883B5D173A291F00EBA827 /* SimpleUI */,
 				6433903416C0DD7800ABA629 /* MainView */,
 				64D1D44416C54E5400BE9C26 /* AddAlarm */,
 			);
@@ -244,16 +273,20 @@
 		64B0472C16B921FB009C936F /* res */ = {
 			isa = PBXGroup;
 			children = (
-				BE26325717324ACA00DDFF8E /* resttime_picker_item_bg@2x.png */,
 				64D1D44B16C54FDF00BE9C26 /* addrecord_menu_bg2@2x.png */,
+				BE883B5B1737927000EBA827 /* alarm_detail_background.png */,
 				64B0472D16B9223B009C936F /* background@2x.jpg */,
 				6466268E1720300700AC466C /* cycle_title_bg@2x.png */,
 				6466269017203B5200AC466C /* cycle_title_select@2x.png */,
 				6466269217203CDB00AC466C /* cycle_title_select_line@2x.png */,
 				64D1D44F16C54FDF00BE9C26 /* h_addrecord_menu_bg1.png */,
+				BE526B1F173C85540048F608 /* icon_alarm_type@2x.png */,
 				64D1D44E16C54FDF00BE9C26 /* icon_clock@2x.png */,
+				BE883B5417377A4400EBA827 /* icon_clock_large@2x.png */,
 				64D1D44D16C54FDF00BE9C26 /* icon_cycle@2x.png */,
+				BE526B20173C85540048F608 /* icon_picture@2x.png */,
 				64D1D44C16C54FDF00BE9C26 /* icon_rest_time@2x.png */,
+				BE526B21173C85540048F608 /* icon_status@2x.png */,
 				BEA0BCE91727702100E0D27D /* icon_tick@2x.png */,
 				BEA0BCEB1727D12F00E0D27D /* icon_tick_unselected@2x.png */,
 				646626961720499A00AC466C /* itemboard@2x.png */,
@@ -265,6 +298,7 @@
 				6444C42F16F8BF5C0053D9A7 /* navi_button_forward_up@2x.png */,
 				64B0473316B92961009C936F /* navigationbar@2x.png */,
 				64B0472F16B9223B009C936F /* seperate_line@2x.png */,
+				BE26325717324ACA00DDFF8E /* simplemenu_item_bg@2x.png */,
 			);
 			name = res;
 			sourceTree = "<group>";
@@ -334,6 +368,19 @@
 				BE140060172B7E5E009BB954 /* CycleCell.xib */,
 			);
 			name = "Resources-iPad";
+			sourceTree = "<group>";
+		};
+		BE883B5D173A291F00EBA827 /* SimpleUI */ = {
+			isa = PBXGroup;
+			children = (
+				BE883B60173A29F500EBA827 /* SimpleMenuView.h */,
+				BE883B61173A29F500EBA827 /* SimpleMenuView.m */,
+				BE883B5E173A296400EBA827 /* SimpleMenuView.xib */,
+				BE883B63173A2C8D00EBA827 /* SimpleMenuCell.h */,
+				BE883B64173A2C8D00EBA827 /* SimpleMenuCell.m */,
+				BE883B66173A2CC000EBA827 /* SimpleMenuCell.xib */,
+			);
+			name = SimpleUI;
 			sourceTree = "<group>";
 		};
 		BEA0BCE21727685C00E0D27D /* Cell */ = {
@@ -440,7 +487,15 @@
 				BEA0BCE81727691400E0D27D /* CycleCell.xib in Resources */,
 				BEA0BCEA1727702100E0D27D /* icon_tick@2x.png in Resources */,
 				BEA0BCEC1727D12F00E0D27D /* icon_tick_unselected@2x.png in Resources */,
-				BE26325817324ACA00DDFF8E /* resttime_picker_item_bg@2x.png in Resources */,
+				BE26325817324ACA00DDFF8E /* simplemenu_item_bg@2x.png in Resources */,
+				BE883B5517377A4400EBA827 /* icon_clock_large@2x.png in Resources */,
+				BE883B571737817900EBA827 /* AlarmDetailView.xib in Resources */,
+				BE883B5C1737927000EBA827 /* alarm_detail_background.png in Resources */,
+				BE883B5F173A296400EBA827 /* SimpleMenuView.xib in Resources */,
+				BE883B67173A2CC100EBA827 /* SimpleMenuCell.xib in Resources */,
+				BE526B22173C85540048F608 /* icon_alarm_type@2x.png in Resources */,
+				BE526B23173C85540048F608 /* icon_picture@2x.png in Resources */,
+				BE526B24173C85540048F608 /* icon_status@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,6 +540,9 @@
 				649634EF1715A87B005C118D /* BaseViewController.m in Sources */,
 				64ACD3851726DA85004DD0B8 /* DateHelper.m in Sources */,
 				BEA0BCE6172768AE00E0D27D /* CycleCell.m in Sources */,
+				BE883B5A173781AD00EBA827 /* AlarmDetailView.m in Sources */,
+				BE883B62173A29F500EBA827 /* SimpleMenuView.m in Sources */,
+				BE883B65173A2C8D00EBA827 /* SimpleMenuCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,7 +570,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=*]" = "iPhone Developer: wu zheng (YU4T5B8JB6)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -526,7 +584,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
-				"PROVISIONING_PROFILE[sdk=*]" = "";
+				"PROVISIONING_PROFILE[sdk=*]" = "4F1373F2-FD33-4C03-A152-618F8FB98162";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -541,7 +599,7 @@
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: wu zheng (YU4T5B8JB6)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -549,7 +607,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4F1373F2-FD33-4C03-A152-618F8FB98162";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};

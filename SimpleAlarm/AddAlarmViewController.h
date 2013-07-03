@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "BaseViewController.h"
 #import "DateHelper.h"
+#import "SimpleMenuView.h"
 
 @class SettingViewCell;
 @class DefaultNavigationBar;
@@ -21,16 +22,23 @@
                                                         UIPickerViewDelegate,
                                                         UITableViewDataSource,
                                                         UITableViewDelegate,
-                                                        UITextViewDelegate>
+                                                        UITextViewDelegate,
+                                                        SimpleMenuViewDelegate>
 {
     NSArray *settingTiles;
     NSArray *settingIcons;
+    NSArray *settingCustomTitle;
+    NSArray *settingCustomIcons;
+    NSArray *settingTypeTitle;
+    NSArray *settingCustomRingTitle;
     UIButton *hiddenKeyBoardView;
     UITextView *tmpMessageTextView;
     BOOL isMessageTextViewEmpty;
     SettingViewCell *currentCell;
     DefaultNavigationBar *_customNavigationBar;
     AlarmRecord *alarmRecord;
+    SimpleMenuView *valuePicker;
+    
 }
 
 @property (retain, nonatomic) IBOutlet UIButton *saveButton;
@@ -40,15 +48,9 @@
 @property (retain, nonatomic) AlarmRecord *setting;
 
 
-@property (retain, nonatomic) IBOutlet UIView *resttimePickerView;
-- (IBAction)fiveMinsBtnAction:(id)sender;
-
 - (void)returnBtnAction;
 - (void)saveBtnAction;
 - (id)initWithAlarmRecord:(AlarmRecord *)record;
-
-- (IBAction)fifteenMinsBtnAction:(id)sender;
-- (IBAction)twentyMinsBtnAction:(id)sender;
 
 
 @end

@@ -11,9 +11,14 @@
 #import "AlarmListCell.h"
 #import "AddAlarmViewController.h"
 #import "BaseViewController.h"
+#import "AlarmDetailView.h"
+#import "SimpleMenuView.h"
 
 @interface MainViewController : BaseViewController <UITableViewDataSource,UITableViewDelegate>{
     SimpleAlarmDataBase *db;
+    AlarmDetailView *detailView;
+    UIButton *alarmDetailViewbackground;
+    SimpleMenuView *testMenu;
 }
 
 
